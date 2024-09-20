@@ -1,0 +1,11 @@
+{
+  "name": "dev-toolz.library",
+  "version": "1.0.0",
+  "description": "Biblioteca de funcionalidades gerais usadas no dia a dia de um desenvolvedor",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lucas Zottis",
+  "license": "ISC"
+}
