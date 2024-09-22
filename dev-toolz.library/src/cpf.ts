@@ -3,9 +3,11 @@ import { IValidator } from "./interfaces/validator";
 import { IValue } from "./interfaces/value";
 import { IValueGenerator } from "./interfaces/valueGenerator";
 import { Random } from "./random";
+import "./extensions/stringExtensions";
 
 export class Cpf implements IValue, IValueGenerator, IValidator {
-    Value: string;
+    message: string;
+    value: string;
 
     private _isPattern(value: string): boolean {
         return value.isEqual("000000000")
@@ -28,7 +30,7 @@ export class Cpf implements IValue, IValueGenerator, IValidator {
             digits = "";
 
             for (let i = 0; i < 9; i++)
-                digits += randomDigits.generate().toString();
+                digits += randomDigits.generate(true).toString();
 
         } while (this._isPattern(digits));
 
@@ -74,39 +76,58 @@ export class Cpf implements IValue, IValueGenerator, IValidator {
     }
 
     private _removeMask(cpf: string): string {
-        return cpf.replace("\.|\/|\-", "");
+        return cpf.replace(/[^\d]/g, "");
     }
 
     isValid(): boolean;
     isValid(value: string): boolean;
     isValid(value?: string): boolean {
-        this.Value = value;
+        this.value = value;
 
-        var validFormat = value.isNotEmpty()
-            && this._isCpfFormatValid(this.Value)
-            && !this._isPattern(this.Value);
-
-        if (!validFormat)
+        if (value.isEmpty()) {
+            this.message = "CPF está vazio.";
             return false;
+        }
 
-        var cpf = this._removeMask(this.Value);
+        if (!this._isCpfFormatValid(this.value)) {
+            this.message = "CPF com formato inválido.";
+            return false;
+        }
+
+        if (this._isPattern(this.value)) {
+            this.message = "CPF não ter todos números iguais.";
+            return false;
+        }
+
+        var cpf = this._removeMask(this.value);
         var calculatingDigits = this._getCalculatingDigits(cpf);
         var firstVerifyingDigit = this._getFirstVerifyingDigit(cpf);
         var secondVerifyingDigit = this._getSecondVerifyingDigit(cpf);
 
-        return this._validateVerifyingDigit(10, calculatingDigits, firstVerifyingDigit)
-            && this._validateVerifyingDigit(11, calculatingDigits + firstVerifyingDigit, secondVerifyingDigit);
+        if (!this._validateVerifyingDigit(10, calculatingDigits, firstVerifyingDigit)) {
+            this.message = "Primeiro dígito é inválido";
+            return false;
+        }
+
+        if (!this._validateVerifyingDigit(11, calculatingDigits + firstVerifyingDigit, secondVerifyingDigit)) {
+            this.message = "Segundo dígito é inválido";
+            return false;
+        }
+
+        this.message = "Válido";
+        return true;
     }
+
     generate<T>(): T;
     generate<T>(condition?: boolean): T;
     generate(condition?: boolean): string {
-        this.Value = this._generateCalculatingDigits();
-        this.Value += this._generateVerifyingDigits(10, this.Value);
-        this.Value += this._generateVerifyingDigits(11, this.Value);
+        this.value = this._generateCalculatingDigits();
+        this.value += this._generateVerifyingDigits(10, this.value);
+        this.value += this._generateVerifyingDigits(11, this.value);
 
         if (condition)
-            this.Value = this.Value.replace(/(\d{3})(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3-$4');
+            this.value = this.value.replace(/(\d{3})(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3-$4');
 
-        return this.Value;
+        return this.value;
     }
 }

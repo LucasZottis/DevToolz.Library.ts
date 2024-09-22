@@ -6,7 +6,8 @@ import { IValidator } from "./interfaces/validator";
 import { IValue } from "./interfaces/value";
 
 export class Cnpj implements IValue, IValidator, IValueGenerator {
-    Value: string;
+    value: string;
+    message: string;
 
     private _isPattern(value: string): boolean {
         return value === "000000000000"
@@ -22,7 +23,8 @@ export class Cnpj implements IValue, IValidator, IValueGenerator {
     }
 
     private _isCnpjFormatValid(cnpj: string): boolean {
-        return cnpj.match(cnpjPattern) ? true : false;
+        let isMatch = cnpj.match(cnpjPattern);
+        return isMatch !== null && isMatch.length > 0 ? true : false;
     }
 
     private _generateCalculatingDigits(): string {
@@ -41,7 +43,7 @@ export class Cnpj implements IValue, IValidator, IValueGenerator {
     }
 
     private _removeMask(cnpj: string): string {
-        return cnpj.replace("\.|\/|\-", "");
+        return cnpj.replace(/[^\d]/g, "");
     }
 
     private _generateVerifyingDigit(startCounter: number, digits: string): string {
@@ -79,40 +81,59 @@ export class Cnpj implements IValue, IValidator, IValueGenerator {
 
     private _validateVerifyingDigit(startCounter: number, digits: string, verifyingDigit: string): boolean {
         let checkDigit = this._generateVerifyingDigit(startCounter, digits);
+
         return checkDigit.isEqual(verifyingDigit);
     }
 
     generate(): string;
     generate(condition: boolean): string;
     generate(condition?: boolean): string {
-        this.Value = this._generateCalculatingDigits();
-        this.Value += this._generateVerifyingDigit(5, this.Value);
-        this.Value += this._generateVerifyingDigit(6, this.Value);
+        this.value = this._generateCalculatingDigits();
+        this.value += this._generateVerifyingDigit(5, this.value);
+        this.value += this._generateVerifyingDigit(6, this.value);
 
         if (condition)
-            this.Value = this.Value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{0,2})/, '$1.$2.$3/$4-$5');
+            this.value = this.value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{0,2})/, '$1.$2.$3/$4-$5');
 
-        return this.Value;
+        return this.value;
     }
 
     isValid(): boolean;
     isValid(value: string): boolean;
     isValid(value?: string): boolean {
-        this.Value = value;
+        this.value = value;
 
-        let validFormat = value.isNotEmpty()
-            && this._isCnpjFormatValid(this.Value)
-            && !this._isPattern(this.Value);
-
-        if (!validFormat)
+        if (value.isEmpty()) {
+            this.message = "CNPJ está vazio.";
             return false;
+        }
 
-        let cnpj: string = this._removeMask(this.Value);
+        if (!this._isCnpjFormatValid(this.value)) {
+            this.message = "CNPJ com formato inválido.";
+            return false;
+        }
+
+        if (this._isPattern(this.value)) {
+            this.message = "CNPJ não ter todos números iguais.";
+            return false;
+        }
+
+        let cnpj: string = this._removeMask(this.value);
         let calculatingDigits = this._getCalculatingDigits(cnpj);
         let firstVerifyingDigit = this._getFirstVerifyingDigit(cnpj);
         let secondVerifyingDigit = this._getSecondVerifyingDigit(cnpj);
 
-        return this._validateVerifyingDigit(5, calculatingDigits, firstVerifyingDigit)
-            && this._validateVerifyingDigit(5, calculatingDigits + firstVerifyingDigit, secondVerifyingDigit);
+        if (!this._validateVerifyingDigit(5, calculatingDigits, firstVerifyingDigit)) {
+            this.message = "Primeiro dígito é inválido";
+            return false;
+        }
+
+        if (!this._validateVerifyingDigit(6, calculatingDigits + firstVerifyingDigit, secondVerifyingDigit)) {
+            this.message = "Segundo dígito é inválido";
+            return false;
+        }
+
+        this.message = "Válido";
+        return true;
     }
 }

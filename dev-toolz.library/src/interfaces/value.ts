@@ -1,3 +1,3 @@
 export interface IValue {
-    Value: string;
+    value: string;
 }

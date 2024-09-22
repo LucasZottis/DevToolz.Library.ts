@@ -2,13 +2,12 @@
   "name": "dev-toolz.library",
   "version": "1.0.0",
   "description": "Biblioteca de funcionalidades gerais usadas no dia a dia de um desenvolvedor",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "build": "npx tsc --build"
   },
   "author": "Lucas Zottis",
   "license": "ISC",
-  "types": "dist/index.d.ts",
   "devDependencies": {
     "@types/node": "^22.5.5",
     "typescript": "^5.6.2"
