@@ -1,11 +1,10 @@
 {
-    "compilerOptions": {
-      "module": "commonjs",
-      "target": "es2019",
-      "declaration": true,
-      "outDir": "./dist"
-    },
-    "include": [
-      "src/**/*"
-    ]
-  }
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2020",
+    "lib": ["es2020"],
+    "declaration": true,
+    "outDir": "./dist"
+  },
+  "include": ["src/**/*"]
+}

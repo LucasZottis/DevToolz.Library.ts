@@ -1,3 +1,5 @@
-import { sayHello } from "./hello-world";
+import { Cnpj } from "./cnpj";
 
-sayHello();
+let cnpj = new Cnpj();
+
+console.log(cnpj.generate(true));
