@@ -13,11 +13,11 @@ export class Random implements IValueGenerator {
         this.max = max ?? 9999;
     }
 
-    private _getRandomNumber(min, max): number {
+    private _getRandomNumber(min: number, max: number): number {
         return Math.random() * (max - min) + min
     }
 
-    private _getRandomInteger(min, max): number {
+    private _getRandomInteger(min: number, max: number): number {
         min = Math.ceil(min)
         max = Math.floor(max)
 
