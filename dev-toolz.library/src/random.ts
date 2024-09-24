@@ -8,9 +8,9 @@ export class Random implements IValueGenerator {
     constructor()
     constructor(min: number, max: number, int: boolean)
     constructor(min?: number, max?: number, int?: boolean) {
-        this.int = int;
-        this.min = min;
-        this.max = max;
+        this.int = int ?? false;
+        this.min = min ?? 0;
+        this.max = max ?? 9999;
     }
 
     private _getRandomNumber(min, max): number {
