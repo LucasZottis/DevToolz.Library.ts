@@ -27,7 +27,7 @@ export class Random implements IValueGenerator {
     generate(): number;
     generate(condition: boolean): number;
     generate(condition?: boolean): number {
-        this.int = condition;
+        this.int = condition ?? false;
 
         if (this.int)
             return this._getRandomInteger(this.min, this.max);
