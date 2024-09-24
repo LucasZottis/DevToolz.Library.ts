@@ -1,6 +1,6 @@
 {
   "name": "dev-toolz.library",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Biblioteca de funcionalidades gerais usadas no dia a dia de um desenvolvedor",
   "main": "index.js",
   "scripts": {
