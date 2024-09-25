@@ -6,8 +6,8 @@ import { IValidator } from "./interfaces/validator";
 import { IValue } from "./interfaces/value";
 
 export class Cnpj implements IValue, IValidator, IValueGenerator {
-    value: string;
-    message: string;
+    value!: string;
+    message!: string;
 
     private _isPattern(value: string): boolean {
         return value === "000000000000"
@@ -28,7 +28,7 @@ export class Cnpj implements IValue, IValidator, IValueGenerator {
     }
 
     private _generateCalculatingDigits(): string {
-        let randomDigits: IValueGenerator = new Random(0, 9, true);
+        let randomDigits = new Random(0, 9, true);
         let digits!: string;
 
         do {
@@ -101,9 +101,9 @@ export class Cnpj implements IValue, IValidator, IValueGenerator {
     isValid(): boolean;
     isValid(value: string): boolean;
     isValid(value?: string): boolean {
-        this.value = value;
+        this.value = value ?? "";
 
-        if (value.isEmpty()) {
+        if (value?.isEmpty()) {
             this.message = "CNPJ está vazio.";
             return false;
         }

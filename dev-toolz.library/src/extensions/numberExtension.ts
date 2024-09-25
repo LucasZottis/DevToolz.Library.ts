@@ -27,13 +27,16 @@ Number.prototype.lessThan = function (value: Number): boolean {
     return this < value;
 }
 
-Number.prototype.between = function (lowestValue: Number, highestValue: Number, inclusive: boolean): boolean {
+Number.prototype.between = function (lowestValue: number, highestValue: number, inclusive: boolean): boolean {
+    let value = this as number;
     if (inclusive)
-        return this >= lowestValue && this <= highestValue;
+        return value >= lowestValue && value <= highestValue;
     else
-        return this > lowestValue && this < highestValue;
+        return value > lowestValue && value < highestValue;
 }
 
-Number.prototype.toBoolean = function (value: Number): boolean {
-    return Math.abs(this).isNotEqual(0);
+Number.prototype.toBoolean = function (): boolean {
+    let value = this as number;
+
+    return Math.abs(value).isNotEqual(0);
 }

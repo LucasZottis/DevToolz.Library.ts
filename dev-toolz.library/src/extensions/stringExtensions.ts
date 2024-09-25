@@ -27,16 +27,14 @@ String.prototype.isEqual = function (value: string): boolean {
 }
 
 String.prototype.isEmpty = function (): boolean {
-    let value: string = this.toString();
-
-    return value === undefined && value === null && value.trim() === "";
-}
+    let value: string = this.toString().trim();
+    return value === "";
+};
 
 String.prototype.isNotEmpty = function (): boolean {
-    let value: string = this.toString();
-
-    return value !== undefined && value !== null && value.trim() !== "";
-}
+    let value: string = this.toString().trim();
+    return value !== "";
+};
 
 String.prototype.isNumber = function (): boolean {
     return isNaN(Number(this));

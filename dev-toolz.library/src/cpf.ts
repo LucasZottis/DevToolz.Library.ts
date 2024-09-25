@@ -6,8 +6,8 @@ import { Random } from "./random";
 import "./extensions/stringExtensions";
 
 export class Cpf implements IValue, IValueGenerator, IValidator {
-    message: string;
-    value: string;
+    message!: string;
+    value!: string;
 
     private _isPattern(value: string): boolean {
         return value.isEqual("000000000")
@@ -82,9 +82,9 @@ export class Cpf implements IValue, IValueGenerator, IValidator {
     isValid(): boolean;
     isValid(value: string): boolean;
     isValid(value?: string): boolean {
-        this.value = value;
+        this.value = value ?? "";
 
-        if (value.isEmpty()) {
+        if (value?.isEmpty()) {
             this.message = "CPF está vazio.";
             return false;
         }
