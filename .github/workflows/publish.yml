@@ -10,9 +10,10 @@ on:
 jobs:
   testing-release:
     runs-on: ubuntu-latest
+
     steps:
       - name: Dizer que executou
-      - run: echo "Funcionou"
+        run: echo "Funcionou"
   # build:
   #   runs-on: ubuntu-latest
   #   steps:
