@@ -1,6 +1,6 @@
 import { cnpjPattern } from "./constants/regexPatterns";
 import { Random } from "./random";
-import "../src/extensions/stringExtensions";
+import "./extensions/stringExtensions";
 import { IValueGenerator } from "./interfaces/valueGenerator";
 import { IValidator } from "./interfaces/validator";
 import { IValue } from "./interfaces/value";
