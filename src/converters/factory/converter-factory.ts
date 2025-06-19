@@ -1,7 +1,7 @@
-import { IConverter } from "../interfaces/converter";
+import { IUnitConverter } from "../interfaces/IUnitConverter";
 
 export class ConverterFactory {
-    private _map: Map<string, IConverter> = new Map();
+    private _map: Map<string, IUnitConverter> = new Map();
 
     constructor() {
         this._registerConverters();
@@ -11,9 +11,9 @@ export class ConverterFactory {
         this._map.set("volume", new (require("../volume/volume-converter").VolumeConverter)());
     }
 
-    public getConverter(converterId: string): IConverter {
+    public getConverter(converterId: string): IUnitConverter {
         const converter = this._map.get(converterId);
-        
+
         if (!converter) {
             throw new Error(`O conversor solicitado não está implementado`);
         }

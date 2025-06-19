@@ -8,7 +8,7 @@ export * from './cpf';
 export * from './cnpj';
 export * from './random';
 export * from './converters/factory/converter-factory';
-export * from './converters/interfaces/converter';
+export * from './converters/interfaces/IUnitConverter';
 export * from './converters/models/unit';
 export * from './converters/volume/volume-converter';
 
