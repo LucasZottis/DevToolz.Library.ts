@@ -10,6 +10,7 @@ export * from './random';
 export * from './converters/factory/converter-factory';
 export * from './converters/interfaces/IUnitConverter';
 export * from './converters/models/unit';
-export * from './converters/volume/volume-converter';
+export * from './converters/services/volume.converter';
+export * from './converters/services/weight-mass.converter';
 
 // export * from './conversors/time-converter/time-converter';
