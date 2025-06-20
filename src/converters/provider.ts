@@ -3,4 +3,5 @@ export const categories = [
     { id: 'weight-mass' },
     { id: 'length' },
     { id: 'temperature' },
+    { id: 'energy' },
 ]
