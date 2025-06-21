@@ -1,5 +1,5 @@
-import { Unit } from '../models/unit';
-import { ConverterBaseService } from './converter-base';
+import { Unit } from '../../models/unit';
+import { ConverterBaseService } from '../base/converter-base';
 
 export class TemperatureConverter extends ConverterBaseService {
     constructor() {
