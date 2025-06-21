@@ -11,7 +11,7 @@ export class ConverterFactory {
     private _registerConverters(): void {
         categories.forEach(category => {
             // this._map.set(category.id, new (require("../services/" + category.id + ".converter"))());
-            const module = require("../services/" + category.id + ".converter");
+            const module = require("../services/" + category.id + "/" + category.id + ".converter");
 
             // Atribui o construtor: preferencialmente `default`, ou a primeira propriedade exportada
             const ConverterClass = module.default || Object.values(module)[0];
