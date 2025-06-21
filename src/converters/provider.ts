@@ -6,4 +6,5 @@ export const categories = [
     { id: 'energy' },
     { id: 'area' },
     { id: 'power' },
+    { id: 'speed' },
 ]
