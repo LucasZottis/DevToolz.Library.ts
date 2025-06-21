@@ -1,4 +1,4 @@
-import { ConverterBaseService } from './converter-base';
+import { ConverterBaseService } from '../base/converter-base';
 
 export class VolumeConverter extends ConverterBaseService {
     constructor() {
