@@ -8,9 +8,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: DevToolz.Library.ts # ajusta para subpasta onde está o tsconfig.json
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
@@ -29,9 +26,6 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: DevToolz.Library.ts
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
@@ -53,9 +47,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-    defaults:
-      run:
-        working-directory: DevToolz.Library.ts
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
