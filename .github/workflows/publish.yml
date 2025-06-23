@@ -17,6 +17,11 @@ jobs:
         with:
           node-version: 20
 
+      - name: Mostrar diretório atual e arquivos
+        run: |
+          pwd
+          ls -la
+
       - name: Instalar dependências
         run: npm ci
 
