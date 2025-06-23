@@ -1,4 +1,5 @@
 import { IUnitConverter } from "../interfaces/IUnitConverter";
+import { categories } from "../provider";
 
 export class ConverterFactory {
     private _map: Map<string, IUnitConverter> = new Map();
@@ -8,7 +9,16 @@ export class ConverterFactory {
     }
 
     private _registerConverters(): void {
-        this._map.set("volume", new (require("../volume/volume-converter").VolumeConverter)());
+        categories.forEach(category => {
+            // this._map.set(category.id, new (require("../services/" + category.id + ".converter"))());
+            const module = require("../services/" + category.id + "/" + category.id + ".converter");
+
+            // Atribui o construtor: preferencialmente `default`, ou a primeira propriedade exportada
+            const ConverterClass = module.default || Object.values(module)[0];
+
+            this._map.set(category.id, new ConverterClass());
+        });
+        // this._map.set("weight-mass", new (require("../weight-mass/weight-mass.converter").WeightMassConverter)());
     }
 
     public getConverter(converterId: string): IUnitConverter {

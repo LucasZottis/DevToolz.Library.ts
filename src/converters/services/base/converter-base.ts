@@ -1,5 +1,5 @@
-import { IUnitConverter } from "../interfaces/IUnitConverter";
-import { Unit } from "../models/unit";
+import { IUnitConverter } from "../../interfaces/IUnitConverter";
+import { Unit } from "../../models/unit";
 
 export abstract class ConverterBaseService implements IUnitConverter {
     private readonly _mapById = new Map<string, Unit>();

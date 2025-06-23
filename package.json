@@ -1,17 +1,21 @@
 {
   "name": "dev-toolz.library",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "Biblioteca de funcionalidades gerais usadas no dia a dia de um desenvolvedor",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -declaration",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "test": "jest"
   },
   "author": "Lucas Zottis",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^22.5.5",
+    "jest": "^30.0.2",
+    "ts-jest": "^29.4.0",
     "typescript": "^5.6.2"
   },
   "files": [
