@@ -8,4 +8,5 @@ export const categories = [
     { id: 'power' },
     { id: 'speed' },
     { id: 'pressure' },
+    { id: 'angle' },
 ]
