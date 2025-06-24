@@ -46,28 +46,19 @@ jobs:
       - name: Executar build
         run: npm run build
 
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
+publish-npm:
+  needs: build
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v4
 
-      - name: Configurar Node.js com registry do GitHub
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://npm.pkg.github.com/
-          scope: '@lucaszottis'
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        registry-url: "https://registry.npmjs.org" # para npm oficial
 
+    - run: npm ci
 
-      - name: Instalar dependências
-        run: npm ci
-
-      - name: Publicar no GitHub Packages
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_KEY }}
+    - run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
