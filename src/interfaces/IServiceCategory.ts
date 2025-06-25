@@ -1,0 +1,3 @@
+interface IServiceCategory {
+    id: string;
+}

@@ -1,0 +1,64 @@
+# name: Node.js Package Publish
+
+# on:
+#   workflow_dispatch:
+#   release:
+#     types: [created]
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout do código
+#         uses: actions/checkout@v4
+
+#       - name: Configurar Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+
+#       - name: Mostrar diretório atual e arquivos
+#         run: |
+#           pwd
+#           ls -la
+
+#       - name: Instalar dependências
+#         run: npm ci
+
+#       - name: Executar testes
+#         run: npm test
+
+#   build:
+#     needs: test
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout do código
+#         uses: actions/checkout@v4
+
+#       - name: Configurar Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+
+#       - name: Instalar dependências
+#         run: npm ci
+
+#       - name: Executar build
+#         run: npm run build
+
+#   publish-npm:
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+
+#       - uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+#           registry-url: "https://registry.npmjs.org" # para npm oficial
+
+#       - run: npm ci
+
+#       - run: npm publish
+#         env:
+#           NODE_AUTH_TOKEN: ${{ secrets.NPM_KEY }}

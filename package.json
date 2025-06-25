@@ -7,7 +7,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "prepare": "npm run build",
-    "test": "jest"
+    "test": "jest",
+    "debug-test": "npm test --watch"
   },
   "author": "Lucas Zottis",
   "license": "ISC",
