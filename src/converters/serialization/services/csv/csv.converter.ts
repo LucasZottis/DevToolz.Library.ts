@@ -37,17 +37,31 @@ export class CsvConverter implements ISerializationConverter {
     }
 
     fromJson(content: string, options?: ISerializationOption): string {
+        if (content === "")
+            throw new Error('O conteúdo JSON não pode ser convertido para CSV válido.');
+
         const json = JSON.parse(content);
 
         if (!Array.isArray(json)) {
             throw new Error("O conteúdo JSON deve ser um array.");
         }
 
-        const separator = options?.separatorCharacter ?? ',';
+        if (json.length === 0)
+            throw new Error('Não há conteúdo no JSON fornecido.');
+
         const headers = Object.keys(json[0]);
+
+        if (headers.length === 0)
+            throw new Error('Não há conteúdo no JSON fornecido.');
+
+        const separator = options?.separatorCharacter ?? ',';
         const csvLines = json.map(item => {
             return headers.map(header => {
-                const value = item[header] ?? '';
+                const value = item[header];
+
+                if (value === null || value === undefined)
+                    return '';
+
                 return value.toString().replace(/,/g, ''); // Remover vírgulas para evitar problemas no CSV
             }).join(separator);
         });

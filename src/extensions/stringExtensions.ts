@@ -1,5 +1,3 @@
-export { }
-
 declare global {
     interface String {
         empty: string;
@@ -44,3 +42,5 @@ String.prototype.toNumber = function (): number {
     let value = Number(this.toString());
     return isNaN(value) ? 0 : value
 }
+
+export { }
