@@ -19,6 +19,13 @@ describe("Sistema Numérico Romano", () => {
             expect(romamValue).toBe("MMXXV");
         });
 
+        it("1999", () => {
+            const decimalValue = 1999;
+            const romamValue = converter.fromDecimal(decimalValue);
+
+            expect(romamValue).toBe("MCMXCIX");
+        });
+
         it("1992", () => {
             const decimalValue = 1992;
             const romamValue = converter.fromDecimal(decimalValue);
@@ -26,11 +33,11 @@ describe("Sistema Numérico Romano", () => {
             expect(romamValue).toBe("MCMXCII");
         });
 
-        it("1999", () => {
-            const decimalValue = 1992;
+        it("1843", () => {
+            const decimalValue = 1843;
             const romamValue = converter.fromDecimal(decimalValue);
 
-            expect(romamValue).toBe("MCMXCIX");
+            expect(romamValue).toBe("MDCCCXLIII");
         });
 
         it("5", () => {
@@ -66,6 +73,71 @@ describe("Sistema Numérico Romano", () => {
             const romamValue = converter.fromDecimal(decimalValue);
 
             expect(romamValue).toBe("IV");
+        });
+    });
+
+    describe("toDecimal", () => {
+        it("MMXXV", () => {
+            const romanValue = "MMXXV";
+            const decimalValue = converter.toDecimal(romanValue);
+
+            expect(decimalValue).toBe(2025);
+        });
+
+        it("MCMXCIX", () => {
+            const romanValue = "MCMXCIX";
+            const decimalValue = converter.toDecimal(romanValue);
+
+            expect(decimalValue).toBe(1999);
+        });
+
+        it("MCMXCII", () => {
+            const romanValue = "MCMXCII";
+            const decimalValue = converter.toDecimal(romanValue);
+
+            expect(decimalValue).toBe(1992);
+        });
+
+        it("MDCCCXLIII", () => {
+            const romanValue = "MDCCCXLIII";
+            const decimalValue = converter.toDecimal(romanValue);
+
+            expect(decimalValue).toBe(1843);
+        });
+
+        it("VI", () => {
+            const romanValue = "VI";
+            const decimalValue = converter.toDecimal(romanValue);
+
+            expect(decimalValue).toBe(6);
+        });
+
+        it("V", () => {
+            const romanValue = "V";
+            const decimalValue = converter.toDecimal(romanValue);
+
+            expect(decimalValue).toBe(5);
+        });
+
+        it("IV", () => {
+            const romanValue = "IV";
+            const decimalValue = converter.toDecimal(romanValue);
+
+            expect(decimalValue).toBe(4);
+        });
+
+        it("III", () => {
+            const romanValue = "III";
+            const decimalValue = converter.toDecimal(romanValue);
+
+            expect(decimalValue).toBe(3);
+        });
+
+        it("I", () => {
+            const romanValue = "I";
+            const decimalValue = converter.toDecimal(romanValue);
+
+            expect(decimalValue).toBe(1);
         });
     });
 });

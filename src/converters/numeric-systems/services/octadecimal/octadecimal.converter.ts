@@ -6,6 +6,10 @@ export class OctadecimalSystemConverter implements INumericSystemConverter {
     }
 
     toDecimal(value: string): number {
-        return parseInt(value, 8);
+        if (value === '')
+            return 0; // parseInt behavior for empty string
+
+        const result = parseInt(value, 8);
+        return isNaN(result) ? 0 : result; // Retorna 0 se
     }
 }
