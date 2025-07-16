@@ -7,8 +7,10 @@ export * from './extensions/arrayExtension';
 export * from './cpf';
 export * from './cnpj';
 export * from './random';
-export * from './converters/factory/converter-factory';
-export * from './converters/interfaces/IUnitConverter';
-export * from './converters/models/unit';
+export * from './converters/unit-converter/unit.converter.factory';
+export * from './converters/unit-converter/interfaces/IUnitConverter';
+export * from './converters/unit-converter/models/unit';
+export * from './converters/serialization/serialization.converter'
+export * from './converters/numeric-systems/numericSystem.converter'
 
 // export * from './conversors/time-converter/time-converter';
