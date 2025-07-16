@@ -3,6 +3,7 @@ import { BaseFactory } from "../../baseFactory";
 import { textFormats } from "./provider";
 import { ITextFormatConverter } from "./inteface/ITextFormatConverter.converter";
 import { ITextFormatConverterFactory } from "./inteface/ITextFormatConverter.converter.factory";
+import { IServiceCategory } from "../../interfaces/IServiceCategory";
 
 export class TextFormatConverterFactory extends BaseFactory<ITextFormatConverter> implements ITextFormatConverterFactory {
     constructor() {

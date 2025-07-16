@@ -1,4 +1,5 @@
 import { IFactory } from "./interfaces/IFactory";
+import { IServiceCategory } from "./interfaces/IServiceCategory";
 
 export abstract class BaseFactory<TService> implements IFactory<TService> {
     protected services: IServiceCategory[] = [];

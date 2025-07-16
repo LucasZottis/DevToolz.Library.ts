@@ -1,4 +1,5 @@
 import { BaseFactory } from "../../baseFactory";
+import { IServiceCategory } from "../../interfaces/IServiceCategory";
 import { INumericSystemConverter } from "./interfaces/INumericSystem.converter";
 import { INumericSystemConverterFactory } from "./interfaces/INumericSystem.converter.factory";
 import { systems } from "./provider";

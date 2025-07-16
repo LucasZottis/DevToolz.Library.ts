@@ -1,4 +1,5 @@
 import { BaseFactory } from "../../baseFactory";
+import { IServiceCategory } from "../../interfaces/IServiceCategory";
 import { ISerializationConverter } from "./interfaces/ISerialization.converter";
 import { ISerializationConverterFactory } from "./interfaces/ISerialization.converter.factory";
 import { serializations } from "./provider";
