@@ -1,4 +1,4 @@
 import { IFactory } from '../../../interfaces/IFactory';
-import { ITextConverter } from './ITextFormatConverter.converter';
+import { ITextFormatConverter } from './ITextFormatConverter.converter';
 
-export interface ITextFormatConverterFactory extends IFactory<ITextConverter> { }
+export interface ITextFormatConverterFactory extends IFactory<ITextFormatConverter> { }

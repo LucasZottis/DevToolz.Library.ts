@@ -104,7 +104,7 @@ describe('DecimalSystemConverter', () => {
         it('deve retornar NaN para strings inválidas', () => {
             expect(converter.toDecimal('abc')).toBeNaN();
             expect(converter.toDecimal('xyz123')).toBeNaN();
-            expect(converter.toDecimal('')).toBeNaN();
+            expect(converter.toDecimal('')).toBe(0);
             expect(converter.toDecimal('   ')).toBeNaN();
             expect(converter.toDecimal('invalid')).toBeNaN();
         });

@@ -1,11 +1,11 @@
-import { ITextConverterFactory } from "./inteface/ITextFormatConverter.converter.factory";
-import { TextConverterFactory } from "./textFormatConverter.converter.factory";
+import { ITextFormatConverterFactory } from "./inteface/ITextFormatConverter.converter.factory";
+import { TextFormatConverterFactory } from "./textFormatConverter.converter.factory";
 
 export class TextConverter {
-    private readonly factory!: ITextConverterFactory;
+    private readonly factory!: ITextFormatConverterFactory;
 
     constructor() {
-        this.factory = new TextConverterFactory();
+        this.factory = new TextFormatConverterFactory();
     }
 
     convert(value: string, from: string, to: string) {
