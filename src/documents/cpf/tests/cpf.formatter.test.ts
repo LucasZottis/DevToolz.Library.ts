@@ -1,4 +1,6 @@
-import { CpfFormatter } from "./cpf.formatter";
+// import { CpfFormatter } from "./cpf.formatter";
+
+import { CpfFormatter } from "../cpf.formatter";
 
 describe("CpfFormatter", () => {
     let formatter: CpfFormatter;

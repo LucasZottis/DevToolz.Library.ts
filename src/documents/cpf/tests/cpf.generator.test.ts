@@ -1,5 +1,5 @@
-import { CpfGenerator } from "./cpf.generator";
-import { CpfValidator } from "./cpf.validator";
+import { CpfGenerator } from "../cpf.generator";
+import { CpfValidator } from "../cpf.validator";
 
 describe("CpfGenerator", () => {
     let generator: CpfGenerator;

@@ -1,4 +1,4 @@
-import { Cpf } from "./cpf";
+import { Cpf } from "../cpf";
 
 describe("Cpf", () => {
 

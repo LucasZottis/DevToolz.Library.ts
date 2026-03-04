@@ -1,4 +1,4 @@
-import { CpfValidator } from "./cpf.validator";
+import { CpfValidator } from "../cpf.validator";
 
 describe("CpfValidator", () => {
     let validator: CpfValidator;
