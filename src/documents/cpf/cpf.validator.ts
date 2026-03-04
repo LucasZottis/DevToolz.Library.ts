@@ -1,5 +1,5 @@
 import { cpfPattern } from "../../constants/regexPatterns";
-import "../extensions/stringExtensions";
+import "../extensions/string.extensions";
 import { IValidator } from "../interfaces/validator.interface";
 import { IValidationResult } from "../models/validation-result.model";
 import { CpfFormatter } from "./cpf.formatter";
