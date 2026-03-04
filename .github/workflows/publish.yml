@@ -97,6 +97,13 @@ jobs:
       - name: Run tests
         run: npm test -- --ci --passWithNoTests
 
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
   publish-npm:
     name: Publish to NPM
     runs-on: ubuntu-latest
@@ -119,8 +126,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
 
       - name: Sync version with release tag
         run: npm version ${{ github.event.release.tag_name }} --no-git-tag-version --allow-same-version
