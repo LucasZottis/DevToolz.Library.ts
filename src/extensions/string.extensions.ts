@@ -11,7 +11,7 @@ declare global {
     }
 }
 
-String.prototype.empty = "";
+// String.prototype.empty = "";
 
 String.prototype.forEach = function (action: (element: string) => void): void {
     let value: string = this.toString();
@@ -24,9 +24,8 @@ String.prototype.isEqual = function (value: string): boolean {
     return value === this.toString();
 }
 
-String.prototype.isEmpty = function (): boolean {
-    let value: string = this.toString().trim();
-    return value === "";
+String.prototype.isEmpty = function (this: string): boolean {
+    return this.trim() === EMPTY_STRING;
 };
 
 String.prototype.isNotEmpty = function (): boolean {
@@ -35,7 +34,8 @@ String.prototype.isNotEmpty = function (): boolean {
 };
 
 String.prototype.isNumber = function (): boolean {
-    return isNaN(Number(this));
+    const val = this.toString().trim();
+    return val.length > 0 && !isNaN(Number(val));
 }
 
 String.prototype.toNumber = function (): number {
@@ -44,3 +44,4 @@ String.prototype.toNumber = function (): number {
 }
 
 export { }
+export const EMPTY_STRING = "";

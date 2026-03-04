@@ -6,6 +6,6 @@ declare global {
     }
 }
 
-Boolean.prototype.toNumber = function (value: boolean): number {
-    return value ? 1 : 0;
+Boolean.prototype.toNumber = function (): number {
+    return this.valueOf() ? 1 : 0;
 }

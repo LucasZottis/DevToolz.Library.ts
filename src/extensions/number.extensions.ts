@@ -11,24 +11,25 @@ declare global {
     }
 }
 
-Number.prototype.isEqual = function (value: Number): boolean {
-    return this === value;
+Number.prototype.isEqual = function (value: number): boolean {
+    return this.valueOf() === value;
 }
 
-Number.prototype.isNotEqual = function (value: Number): boolean {
-    return this !== value;
+Number.prototype.isNotEqual = function (value: number): boolean {
+    return this.valueOf() !== value;
 }
 
-Number.prototype.greaterThan = function (value: Number): boolean {
-    return this > value;
+Number.prototype.greaterThan = function (value: number): boolean {
+    return this.valueOf() > value;
 }
 
-Number.prototype.lessThan = function (value: Number): boolean {
-    return this < value;
+Number.prototype.lessThan = function (value: number): boolean {
+    return this.valueOf() < value;
 }
 
 Number.prototype.between = function (lowestValue: number, highestValue: number, inclusive: boolean): boolean {
-    let value = this as number;
+    let value = this.valueOf();
+
     if (inclusive)
         return value >= lowestValue && value <= highestValue;
     else
@@ -36,7 +37,5 @@ Number.prototype.between = function (lowestValue: number, highestValue: number, 
 }
 
 Number.prototype.toBoolean = function (): boolean {
-    let value = this as number;
-
-    return Math.abs(value).isNotEqual(0);
+    return Math.abs(this as number) !== 0;
 }

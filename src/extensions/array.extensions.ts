@@ -10,5 +10,5 @@ Array.prototype.contains = function <T>(predicate: (value: any, index: number, a
     let list: T[] = this;
     let item = list.find(predicate);
 
-    return item !== undefined || item !== null;
+    return item !== undefined && item !== null;
 }
