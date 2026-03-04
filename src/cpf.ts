@@ -3,7 +3,7 @@ import { IValidator } from "./interfaces/validator";
 import { IValue } from "./interfaces/value";
 import { IValueGenerator } from "./interfaces/valueGenerator";
 import { Random } from "./random";
-import "./extensions/stringExtensions";
+import "./extensions/string.extensions";
 
 export class Cpf implements IValue, IValueGenerator, IValidator {
     message!: string;

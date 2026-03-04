@@ -1,8 +1,8 @@
 // src/extensions/index.ts
-export * from './extensions/stringExtensions';
-export * from './extensions/numberExtension';
-export * from './extensions/booleanExtension';
-export * from './extensions/arrayExtension';
+export * from './extensions/string.extensions';
+export * from './extensions/number.extensions';
+export * from './extensions/boolean.extensions';
+export * from './extensions/array.extensions';
 
 export * from './cpf';
 export * from './cnpj';
