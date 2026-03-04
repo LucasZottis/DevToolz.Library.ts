@@ -1,64 +1,131 @@
-name: Node.js Package Publish
+# name: Node.js Package Publish
+
+# on:
+#   workflow_dispatch:
+#   release:
+#     types: [created]
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout do código
+#         uses: actions/checkout@v4
+
+#       - name: Configurar Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+
+#       - name: Mostrar diretório atual e arquivos
+#         run: |
+#           pwd
+#           ls -la
+
+#       - name: Instalar dependências
+#         run: npm ci
+
+#       - name: Executar testes
+#         run: npm test
+
+#   build:
+#     needs: test
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout do código
+#         uses: actions/checkout@v4
+
+#       - name: Configurar Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+
+#       - name: Instalar dependências
+#         run: npm ci
+
+#       - name: Executar build
+#         run: npm run build
+
+#   publish-npm:
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+
+#       - uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+#           registry-url: "https://registry.npmjs.org" # para npm oficial
+
+#       - run: npm ci
+
+#       - run: npm publish
+#         env:
+#           NODE_AUTH_TOKEN: ${{ secrets.NPM_KEY }}
+
+name: Publish
 
 on:
-  workflow_dispatch:
   release:
-    types: [created]
+    types:
+      - published
 
 jobs:
-  test:
+  build-and-test:
+    name: Build & Test
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout do código
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: "22.x"
+          cache: "npm"
 
-      - name: Mostrar diretório atual e arquivos
-        run: |
-          pwd
-          ls -la
-
-      - name: Instalar dependências
+      - name: Install dependencies
         run: npm ci
 
-      - name: Executar testes
-        run: npm test
+      - name: Type check
+        run: npx tsc --noEmit
 
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
-
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Instalar dependências
-        run: npm ci
-
-      - name: Executar build
+      - name: Build
         run: npm run build
 
+      - name: Run tests
+        run: npm test -- --ci --passWithNoTests
+
   publish-npm:
-    needs: build
+    name: Publish to NPM
     runs-on: ubuntu-latest
+    needs: build-and-test
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
-          registry-url: "https://registry.npmjs.org" # para npm oficial
+          node-version: "22.x"
+          cache: "npm"
+          registry-url: "https://registry.npmjs.org"
 
-      - run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-      - run: npm publish
+      - name: Build
+        run: npm run build
+
+      - name: Sync version with release tag
+        run: npm version ${{ github.event.release.tag_name }} --no-git-tag-version --allow-same-version
+
+      - name: Publish package
+        run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_KEY }}
