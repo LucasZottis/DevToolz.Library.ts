@@ -136,6 +136,6 @@ jobs:
         run: npm version ${{ github.event.release.tag_name }} --no-git-tag-version --allow-same-version
 
       - name: Publish package
-        run: npm publish --provenance --access public
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_KEY }}
