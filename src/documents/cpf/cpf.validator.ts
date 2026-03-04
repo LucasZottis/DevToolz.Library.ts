@@ -1,5 +1,5 @@
 import { cpfPattern } from "../../constants/regexPatterns";
-import "../extensions/string.extensions";
+import "../../extensions/string.extensions";
 import { IValidator } from "../interfaces/validator.interface";
 import { IValidationResult } from "../models/validation-result.model";
 import { CpfFormatter } from "./cpf.formatter";
@@ -8,7 +8,7 @@ export class CpfValidator implements IValidator {
     private readonly _formatter = new CpfFormatter();
 
     private _isRepeatedDigits(cpf: string): boolean {
-        return /^(\d)\1{8}$/.test(cpf);
+        return /^(\d)\1{10}$/.test(cpf);
     }
 
     private _isFormatValid(cpf: string): boolean {

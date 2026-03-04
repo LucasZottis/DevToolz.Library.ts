@@ -1,10 +1,13 @@
+import { CpfGenerator } from "../cpf.generator";
 import { CpfValidator } from "../cpf.validator";
 
 describe("CpfValidator", () => {
     let validator: CpfValidator;
+    let generator: CpfGenerator;
 
     beforeEach(() => {
         validator = new CpfValidator();
+        generator = new CpfGenerator();
     });
 
     // -------------------------------------------------------------------------
@@ -72,15 +75,17 @@ describe("CpfValidator", () => {
 
     describe("Dado um CPF com dígito verificador inválido", () => {
         it("deve retornar inválido quando o primeiro dígito verificador está errado", () => {
-            // CPF real: 529.982.247-25 — alteramos o primeiro dígito
-            const result = validator.validate("529.982.247-35");
+            const valid = generator.generate(false);
+            const tampered = valid.substring(0, 9) + String((Number(valid[9]) + 1) % 10) + valid[10];
+            const result = validator.validate(tampered);
             expect(result.isValid).toBe(false);
             expect(result.message).toBe("Primeiro dígito verificador é inválido.");
         });
 
         it("deve retornar inválido quando o segundo dígito verificador está errado", () => {
-            // CPF real: 529.982.247-25 — alteramos o segundo dígito
-            const result = validator.validate("529.982.247-26");
+            const valid = generator.generate(false);
+            const tampered = valid.substring(0, 10) + String((Number(valid[10]) + 1) % 10);
+            const result = validator.validate(tampered);
             expect(result.isValid).toBe(false);
             expect(result.message).toBe("Segundo dígito verificador é inválido.");
         });
@@ -91,26 +96,34 @@ describe("CpfValidator", () => {
     // -------------------------------------------------------------------------
 
     describe("Dado um CPF válido", () => {
-        it.each([
-            "529.982.247-25",
-            "111.444.777-35",
-            "871.292.107-40",
-            "153.509.460-56",
-        ])("deve aceitar %s formatado", (cpf) => {
+        it("deve aceitar CPF gerado sem máscara", () => {
+            const cpf = generator.generate(false);
             const result = validator.validate(cpf);
             expect(result.isValid).toBe(true);
             expect(result.message).toBe("Válido");
         });
 
-        it.each([
-            "52998224725",
-            "11144477735",
-            "87129210740",
-            "15350946056",
-        ])("deve aceitar %s sem máscara", (cpf) => {
+        it("deve aceitar CPF gerado com máscara", () => {
+            const cpf = generator.generate(true);
             const result = validator.validate(cpf);
             expect(result.isValid).toBe(true);
             expect(result.message).toBe("Válido");
+        });
+
+        it("deve aceitar 10 CPFs gerados consecutivamente", () => {
+            for (let i = 0; i < 10; i++) {
+                const cpf = generator.generate(i % 2 === 0);
+                const result = validator.validate(cpf);
+                expect(result.isValid).toBe(true);
+            }
+        });
+
+        it("deve aceitar o mesmo CPF com e sem máscara", () => {
+            const raw = generator.generate(false);
+            const formatted = raw.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+
+            expect(validator.validate(raw).isValid).toBe(true);
+            expect(validator.validate(formatted).isValid).toBe(true);
         });
     });
 });

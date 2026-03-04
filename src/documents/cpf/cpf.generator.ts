@@ -1,5 +1,5 @@
 import { Random } from "../../random";
-import "../extensions/string.extensions";
+import "../../extensions/string.extensions";
 import { IGenerator } from "../interfaces/generator.interface";
 import { CpfFormatter } from "./cpf.formatter";
 

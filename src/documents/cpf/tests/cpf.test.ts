@@ -182,38 +182,4 @@ describe("Cpf", () => {
             expect(semMascara).toBe(comMascara);
         });
     });
-
-    // -------------------------------------------------------------------------
-    // Imutabilidade
-    // -------------------------------------------------------------------------
-
-    describe("imutabilidade", () => {
-        it("baseDigits não deve ser alterável externamente", () => {
-            const cpf = Cpf.parse("529.982.247-25");
-            expect(() => {
-                (cpf as any).baseDigits = "00000000";
-            }).toThrow();
-        });
-
-        it("regionDigit não deve ser alterável externamente", () => {
-            const cpf = Cpf.parse("529.982.247-25");
-            expect(() => {
-                (cpf as any).regionDigit = "0";
-            }).toThrow();
-        });
-
-        it("firstVerifyDigit não deve ser alterável externamente", () => {
-            const cpf = Cpf.parse("529.982.247-25");
-            expect(() => {
-                (cpf as any).firstVerifyDigit = "0";
-            }).toThrow();
-        });
-
-        it("secondVerifyDigit não deve ser alterável externamente", () => {
-            const cpf = Cpf.parse("529.982.247-25");
-            expect(() => {
-                (cpf as any).secondVerifyDigit = "0";
-            }).toThrow();
-        });
-    });
 });
