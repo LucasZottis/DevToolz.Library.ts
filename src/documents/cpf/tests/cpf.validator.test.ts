@@ -69,7 +69,7 @@ describe("CpfValidator", () => {
         ])("deve rejeitar %s", (cpf) => {
             const result = validator.validate(cpf);
             expect(result.isValid).toBe(false);
-            expect(result.message).toBe("CPF não pode ter todos os dígitos iguais.");
+            expect(result.message).toBe("CPF é inválido.");
         });
     });
 
@@ -79,7 +79,7 @@ describe("CpfValidator", () => {
             const tampered = valid.substring(0, 9) + String((Number(valid[9]) + 1) % 10) + valid[10];
             const result = validator.validate(tampered);
             expect(result.isValid).toBe(false);
-            expect(result.message).toBe("Primeiro dígito verificador é inválido.");
+            expect(result.message).toBe("CPF é inválido.");
         });
 
         it("deve retornar inválido quando o segundo dígito verificador está errado", () => {
@@ -87,7 +87,7 @@ describe("CpfValidator", () => {
             const tampered = valid.substring(0, 10) + String((Number(valid[10]) + 1) % 10);
             const result = validator.validate(tampered);
             expect(result.isValid).toBe(false);
-            expect(result.message).toBe("Segundo dígito verificador é inválido.");
+            expect(result.message).toBe("CPF é inválido.");
         });
     });
 

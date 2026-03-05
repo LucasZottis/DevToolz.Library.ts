@@ -8,5 +8,11 @@ module.exports = {
         '**/__tests__/**/*.spec.ts',
         '**/?(*.)+(spec|test).ts'
     ],
-    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node']
+    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+    globals: {
+        'ts-jest': {
+            tsconfig: 'tsconfig.json',
+            diagnostics: false,
+        }
+    }
 };

@@ -1,7 +1,4 @@
 {
-    // Use o IntelliSense para saber mais sobre os atributos possíveis.
-    // Focalizar para exibir as descrições dos atributos existentes.
-    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
@@ -11,11 +8,34 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            // "program": "${workspaceFolder}\\dist\\index.js",
             "program": "${workspaceFolder}\\jest.config.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Jest - arquivo atual",
+            "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+            "args": [
+                "--runInBand",
+                "--testPathPattern",
+                "${fileBasenameNoExtension}"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Jest - todos os testes",
+            "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+            "args": [
+                "--runInBand"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
         }
     ]
 }

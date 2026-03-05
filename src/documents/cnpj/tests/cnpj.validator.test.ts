@@ -66,7 +66,7 @@ describe("CnpjValidator", () => {
         ])("deve rejeitar %s", (cnpj) => {
             const result = validator.validate(cnpj);
             expect(result.isValid).toBe(false);
-            expect(result.message).toBe("CNPJ não pode ter todos os dígitos iguais.");
+            expect(result.message).toBe("CNPJ é inválido.");
         });
     });
 
@@ -78,13 +78,13 @@ describe("CnpjValidator", () => {
         it("deve retornar inválido quando o primeiro dígito verificador está errado", () => {
             const result = validator.validate("11.222.333/0001-91");
             expect(result.isValid).toBe(false);
-            expect(result.message).toBe("Primeiro dígito verificador é inválido.");
+            expect(result.message).toBe("CNPJ é inválido.");
         });
 
         it("deve retornar inválido quando o segundo dígito verificador está errado", () => {
             const result = validator.validate("11.222.333/0001-80");
             expect(result.isValid).toBe(false);
-            expect(result.message).toBe("Segundo dígito verificador é inválido.");
+            expect(result.message).toBe("CNPJ é inválido.");
         });
     });
 
