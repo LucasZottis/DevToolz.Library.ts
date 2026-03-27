@@ -1,5 +1,5 @@
 import { cpfPattern } from "../../constants/regexPatterns";
-import "../extensions/stringExtensions";
+import "../../extensions/string.extensions";
 import { IValidator } from "../interfaces/validator.interface";
 import { IValidationResult } from "../models/validation-result.model";
 import { CpfFormatter } from "./cpf.formatter";
@@ -8,7 +8,7 @@ export class CpfValidator implements IValidator {
     private readonly _formatter = new CpfFormatter();
 
     private _isRepeatedDigits(cpf: string): boolean {
-        return /^(\d)\1{8}$/.test(cpf);
+        return /^(\d)\1{10}$/.test(cpf);
     }
 
     private _isFormatValid(cpf: string): boolean {
@@ -26,32 +26,31 @@ export class CpfValidator implements IValidator {
         return (rest < 2 ? 0 : 11 - rest).toString();
     }
 
-    private _fail(message: string): IValidationResult {
-        return { isValid: false, message };
+    private _fail(message: string, type: "empty" | "format" | "pattern" | "invalid" | ""): IValidationResult {
+        return { isValid: false, message, type };
     }
 
     validate(value: string): IValidationResult {
         if (!value || value.isEmpty())
-            return this._fail("CPF está vazio.");
+            return this._fail("CPF está vazio.", "empty");
 
         if (!this._isFormatValid(value))
-            return this._fail("CPF com formato inválido.");
+            return this._fail("CPF com formato inválido.", "format");
 
         const cpf = this._formatter.removeMask(value);
 
         if (this._isRepeatedDigits(cpf))
-            return this._fail("CPF não pode ter todos os dígitos iguais.");
+            return this._fail("CPF é inválido.", "invalid");
 
         const calculating = cpf.substring(0, 9);
         const first = cpf[9];
         const second = cpf[10];
+        const isValid = this._calcVerifyingDigit(10, calculating) === first
+            && this._calcVerifyingDigit(11, calculating + first) === second;
 
-        if (this._calcVerifyingDigit(10, calculating) !== first)
-            return this._fail("Primeiro dígito verificador é inválido.");
+        if (!isValid)
+            return this._fail("CPF é inválido.", "invalid");
 
-        if (this._calcVerifyingDigit(11, calculating + first) !== second)
-            return this._fail("Segundo dígito verificador é inválido.");
-
-        return { isValid: true, message: "Válido" };
+        return { isValid: true, message: "Válido", type: "" };
     }
 }

@@ -22,6 +22,7 @@ export class Cpf {
         // this.estados = getEstadosPorDigito(Number(regionDigit));
         this.firstVerifyDigit = firstVerifyDigit;
         this.secondVerifyDigit = secondVerifyDigit;
+        Object.freeze(this);
     }
 
     toString(): string {

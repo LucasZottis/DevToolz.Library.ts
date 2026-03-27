@@ -1,6 +1,6 @@
 {
-  "name": "dev-toolz.library",
-  "version": "1.2.2",
+  "name": "devtoolz-library",
+  "version": "1.0.1",
   "description": "Biblioteca de funcionalidades gerais usadas no dia a dia de um desenvolvedor",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,7 +8,9 @@
     "build": "tsc -p tsconfig.json",
     "prepare": "npm run build",
     "test": "jest",
-    "debug-test": "npm test --watch"
+    "test:watch": "jest --watch",
+    "test:file": "jest --testPathPattern",
+    "debug-test": "node --inspect-brk node_modules/.bin/jest --runInBand"
   },
   "author": "Lucas Zottis",
   "license": "ISC",

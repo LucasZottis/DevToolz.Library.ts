@@ -1,12 +1,10 @@
-// import { CpfFormatter } from "./cpf.formatter";
+import { CnpjFormatter } from "../cnpj.formatter";
 
-import { CpfFormatter } from "../cpf.formatter";
-
-describe("CpfFormatter", () => {
-    let formatter: CpfFormatter;
+describe("CnpjFormatter", () => {
+    let formatter: CnpjFormatter;
 
     beforeEach(() => {
-        formatter = new CpfFormatter();
+        formatter = new CnpjFormatter();
     });
 
     // -------------------------------------------------------------------------
@@ -14,30 +12,20 @@ describe("CpfFormatter", () => {
     // -------------------------------------------------------------------------
 
     describe("applyMask", () => {
-        it("deve formatar CPF sem máscara para o padrão NNN.NNN.NNN-NN", () => {
-            expect(formatter.applyMask("52998224725")).toBe("529.982.247-25");
+        it("deve formatar CNPJ sem máscara para o padrão NN.NNN.NNN/NNNN-NN", () => {
+            expect(formatter.applyMask("11222333000181")).toBe("11.222.333/0001-81");
         });
 
-        it("deve formatar CPF com dígito verificador zero", () => {
-            expect(formatter.applyMask("87129210740")).toBe("871.292.107-40");
-        });
-
-        it("deve formatar CPF iniciado com zero", () => {
-            expect(formatter.applyMask("01234567890")).toBe("012.345.678-90");
+        it("deve formatar CNPJ iniciado com zero", () => {
+            expect(formatter.applyMask("00000000000191")).toBe("00.000.000/0001-91");
         });
 
         it("deve retornar string vazia ao receber string vazia", () => {
             expect(formatter.applyMask("")).toBe("");
         });
 
-        it("não deve alterar entrada com menos de 11 dígitos", () => {
+        it("não deve alterar entrada com menos de 14 dígitos", () => {
             expect(formatter.applyMask("1234567")).toBe("1234567");
-        });
-
-        it("não deve alterar entrada com mais de 11 dígitos", () => {
-            // A regex captura apenas os primeiros 11 dígitos — o excedente fica sem máscara
-            const result = formatter.applyMask("529982247250");
-            expect(result).toMatch(/^\d{3}\.\d{3}\.\d{3}-\d{2}/);
         });
     });
 
@@ -46,16 +34,16 @@ describe("CpfFormatter", () => {
     // -------------------------------------------------------------------------
 
     describe("removeMask", () => {
-        it("deve remover pontos e traço do CPF formatado", () => {
-            expect(formatter.removeMask("529.982.247-25")).toBe("52998224725");
+        it("deve remover pontos, barra e traço do CNPJ formatado", () => {
+            expect(formatter.removeMask("11.222.333/0001-81")).toBe("11222333000181");
         });
 
         it("deve retornar o mesmo valor se não houver máscara", () => {
-            expect(formatter.removeMask("52998224725")).toBe("52998224725");
+            expect(formatter.removeMask("11222333000181")).toBe("11222333000181");
         });
 
         it("deve remover qualquer caractere não numérico", () => {
-            expect(formatter.removeMask("529 982 247 25")).toBe("52998224725");
+            expect(formatter.removeMask("11 222 333 0001 81")).toBe("11222333000181");
         });
 
         it("deve retornar string vazia ao receber string vazia", () => {
@@ -63,11 +51,11 @@ describe("CpfFormatter", () => {
         });
 
         it("deve retornar string vazia ao receber apenas caracteres não numéricos", () => {
-            expect(formatter.removeMask("...--")).toBe("");
+            expect(formatter.removeMask("..//--")).toBe("");
         });
 
         it("deve preservar zeros à esquerda", () => {
-            expect(formatter.removeMask("012.345.678-90")).toBe("01234567890");
+            expect(formatter.removeMask("00.000.000/0001-91")).toBe("00000000000191");
         });
     });
 
@@ -77,12 +65,12 @@ describe("CpfFormatter", () => {
 
     describe("simetria entre applyMask e removeMask", () => {
         it("removeMask(applyMask(raw)) deve retornar o valor original", () => {
-            const raw = "52998224725";
+            const raw = "11222333000181";
             expect(formatter.removeMask(formatter.applyMask(raw))).toBe(raw);
         });
 
         it("applyMask(removeMask(formatted)) deve retornar o valor original", () => {
-            const formatted = "529.982.247-25";
+            const formatted = "11.222.333/0001-81";
             expect(formatter.applyMask(formatter.removeMask(formatted))).toBe(formatted);
         });
     });

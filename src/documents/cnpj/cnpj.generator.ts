@@ -1,20 +1,24 @@
 import { Random } from "../../random";
 import "../../extensions/string.extensions";
 import { IGenerator } from "../interfaces/generator.interface";
-import { CpfFormatter } from "./cpf.formatter";
+import { CnpjFormatter } from "./cnpj.formatter";
 
-export class CpfGenerator implements IGenerator {
-    private readonly _formatter = new CpfFormatter();
+export class CnpjGenerator implements IGenerator {
+    private readonly _formatter = new CnpjFormatter();
 
-    private _isRepeatedDigits(cpf: string): boolean {
-        return /^(\d)\1{8}$/.test(cpf);
+    private _isRepeatedDigits(cnpj: string): boolean {
+        return /^(\d)\1{13}$/.test(cnpj);
     }
 
     private _calcVerifyingDigit(startCounter: number, digits: string): string {
         let result = 0;
 
         digits.forEach(digit => {
-            result += digit.toNumber() * startCounter--;
+            result += digit.toNumber() * startCounter;
+            startCounter--;
+
+            if (startCounter < 2)
+                startCounter = 9;
         });
 
         const rest = result % 11;
@@ -27,7 +31,7 @@ export class CpfGenerator implements IGenerator {
 
         do {
             digits = "";
-            for (let i = 0; i < 9; i++)
+            for (let i = 0; i < 12; i++)
                 digits += random.generate(true).toString();
         } while (this._isRepeatedDigits(digits));
 
@@ -36,11 +40,11 @@ export class CpfGenerator implements IGenerator {
 
     generate(formatted = false): string {
         const calculating = this._generateCalculatingDigits();
-        const first = this._calcVerifyingDigit(10, calculating);
-        const second = this._calcVerifyingDigit(11, calculating + first);
+        const first = this._calcVerifyingDigit(5, calculating);
+        const second = this._calcVerifyingDigit(6, calculating + first);
 
-        const cpf = calculating + first + second;
+        const cnpj = calculating + first + second;
 
-        return formatted ? this._formatter.applyMask(cpf) : cpf;
+        return formatted ? this._formatter.applyMask(cnpj) : cnpj;
     }
 }
