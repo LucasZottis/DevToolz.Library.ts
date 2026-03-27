@@ -8,6 +8,7 @@ declare global {
         isNotEmpty(): boolean;
         isNumber(): boolean;
         toNumber(): number;
+        removeAccents(): string;
     }
 }
 
@@ -41,6 +42,10 @@ String.prototype.isNumber = function (): boolean {
 String.prototype.toNumber = function (): number {
     let value = Number(this.toString());
     return isNaN(value) ? 0 : value
+}
+
+String.prototype.removeAccents = function (): string {
+    return this.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
 export { }
