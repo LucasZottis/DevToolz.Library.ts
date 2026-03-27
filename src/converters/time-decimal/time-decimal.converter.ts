@@ -1,21 +1,26 @@
+import { ConversionResult } from './models/conversion-result.model';
 import { ITimeDecimalConverter } from './interfaces/ITimeDecimal.converter';
 
 export class TimeDecimalConverter implements ITimeDecimalConverter {
-    paraDecimal(horas: number, minutos: number, segundos: number): number {
-        return horas + (minutos / 60) + (segundos / 3600);
+    toDecimal(hours: number, minutes: number, seconds: number): ConversionResult {
+        const totalHours = hours + (minutes / 60) + (seconds / 3600);
+
+        return {
+            days: totalHours / 24,
+            hours: totalHours,
+            minutes: minutes / 60,
+            seconds: seconds / 3600,
+        };
     }
 
-    paraHora(decimal: number): string {
-        const horasInteiras = Math.floor(decimal);
-        const parteDecimal = decimal - horasInteiras;
+    toTime(decimal: number): ConversionResult {
+        const days = Math.floor(decimal / 24);
+        const remainingHours = decimal - days * 24;
+        const hours = Math.floor(remainingHours);
+        const decimalPart = remainingHours - hours;
+        const minutes = Math.floor(decimalPart * 60);
+        const seconds = Math.floor((decimalPart * 60 - minutes) * 60);
 
-        const minutos = Math.floor(parteDecimal * 60);
-        const segundos = Math.floor((parteDecimal * 60 - minutos) * 60);
-
-        const horas = horasInteiras.toString().padStart(2, '0');
-        const mins = minutos.toString().padStart(2, '0');
-        const segs = segundos.toString().padStart(2, '0');
-
-        return `${horas}:${mins}:${segs}`;
+        return { days, hours, minutes, seconds };
     }
 }

@@ -1,4 +1,6 @@
+import { ConversionResult } from '../models/conversion-result.model';
+
 export interface ITimeDecimalConverter {
-    paraDecimal(horas: number, minutos: number, segundos: number): number;
-    paraHora(decimal: number): string;
+    toDecimal(hours: number, minutes: number, seconds: number): ConversionResult;
+    toTime(decimal: number): ConversionResult;
 }
