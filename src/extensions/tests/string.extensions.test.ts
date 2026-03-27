@@ -1,5 +1,78 @@
 import '../string.extensions';
 
+describe("String.prototype.toBinary", () => {
+    describe("Dado uma string vazia", () => {
+        it("deve retornar string vazia", () => {
+            expect("".toBinary()).toBe("");
+        });
+    });
+
+    describe("Dado um único caractere", () => {
+        it("deve converter 'A' para binário", () => {
+            expect("A".toBinary()).toBe("01000001");
+        });
+
+        it("deve converter 'a' para binário", () => {
+            expect("a".toBinary()).toBe("01100001");
+        });
+    });
+
+    describe("Dado múltiplos caracteres", () => {
+        it("deve converter 'Hi' para binário separado por espaços", () => {
+            expect("Hi".toBinary()).toBe("01001000 01101001");
+        });
+
+        it("deve converter 'ABC' para binário separado por espaços", () => {
+            expect("ABC".toBinary()).toBe("01000001 01000010 01000011");
+        });
+    });
+
+    describe("Dado conversão de ida e volta", () => {
+        it("deve retornar o texto original após toBinary e fromBinary", () => {
+            expect("Hello".toBinary().fromBinary()).toBe("Hello");
+        });
+
+        it("deve preservar espaços após ida e volta", () => {
+            expect("Hello World".toBinary().fromBinary()).toBe("Hello World");
+        });
+    });
+});
+
+describe("String.prototype.fromBinary", () => {
+    describe("Dado uma string vazia", () => {
+        it("deve retornar string vazia", () => {
+            expect("".fromBinary()).toBe("");
+        });
+    });
+
+    describe("Dado um único bloco binário", () => {
+        it("deve converter '01000001' para 'A'", () => {
+            expect("01000001".fromBinary()).toBe("A");
+        });
+
+        it("deve converter '01100001' para 'a'", () => {
+            expect("01100001".fromBinary()).toBe("a");
+        });
+    });
+
+    describe("Dado múltiplos blocos binários", () => {
+        it("deve converter '01001000 01101001' para 'Hi'", () => {
+            expect("01001000 01101001".fromBinary()).toBe("Hi");
+        });
+
+        it("deve converter '01000001 01000010 01000011' para 'ABC'", () => {
+            expect("01000001 01000010 01000011".fromBinary()).toBe("ABC");
+        });
+    });
+
+    describe("Dado conversão de ida e volta", () => {
+        it("deve retornar o binário original após fromBinary e toBinary", () => {
+            const binary = "01001000 01101001";
+            expect(binary.fromBinary().toBinary()).toBe(binary);
+        });
+    });
+});
+
 describe("String.prototype.removeAccents", () => {
     describe("Dado uma string sem acentuação", () => {
         it("deve retornar a mesma string", () => {
