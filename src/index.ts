@@ -28,4 +28,3 @@ export * from './converters/numeric-systems/numericSystem.converter'
 export * from './converters/time-decimal/models/conversion-result.model';
 export * from './converters/time-decimal/interfaces/ITimeDecimal.converter';
 export * from './converters/time-decimal/time-decimal.converter';
-export * from './converters/text-format/textFormatConverter.converter';
