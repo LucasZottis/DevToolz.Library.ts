@@ -28,3 +28,6 @@ export * from './converters/numeric-systems/numericSystem.converter'
 export * from './converters/time-decimal/models/conversion-result.model';
 export * from './converters/time-decimal/interfaces/ITimeDecimal.converter';
 export * from './converters/time-decimal/time-decimal.converter';
+
+export * from './text-letter-counter/models/text-letter-counter-result';
+export * from './text-letter-counter/text-letter-counter';
