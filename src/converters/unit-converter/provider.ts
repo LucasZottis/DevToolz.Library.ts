@@ -12,4 +12,5 @@ export const categories: IServiceCategory[] = [
     { id: 'pressure' },
     { id: 'angle' },
     { id: 'data' },
+    { id: 'time' },
 ]
