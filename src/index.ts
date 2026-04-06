@@ -38,3 +38,4 @@ export * from './math/services/sum/sum.calculator';
 export * from './math/services/subtract/subtract.calculator';
 export * from './math/services/multiply/multiply.calculator';
 export * from './math/services/divide/divide.calculator';
+export * from './math/services/arithmetic-progression/arithmetic-progression.calculator';
