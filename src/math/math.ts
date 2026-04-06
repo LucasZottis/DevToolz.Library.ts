@@ -8,6 +8,7 @@ import { ThermalSensationCalculator } from "./services/thermal-sensation/thermal
 import { PrimeCalculator } from "./services/prime/prime.calculator";
 import { EquationCalculator } from "./services/equation/equation.calculator";
 import { FractionCalculator, Fraction } from "./services/fraction/fraction.calculator";
+import { RuleOfThreeCalculator, CompoundFactor } from "./services/rule-of-three/rule-of-three.calculator";
 
 export class Math {
     static sum(a: number, b: number): number {
@@ -64,5 +65,17 @@ export class Math {
 
     static fractionToDecimal(numerator: number, denominator: number): number {
         return new FractionCalculator().fractionToDecimal(numerator, denominator);
+    }
+
+    static ruleOfThreeDirect(a: number, b: number, c: number): number {
+        return new RuleOfThreeCalculator().simplesDireta(a, b, c);
+    }
+
+    static ruleOfThreeInverse(a: number, b: number, c: number): number {
+        return new RuleOfThreeCalculator().simplesInversa(a, b, c);
+    }
+
+    static ruleOfThreeCompound(b: number, fatores: CompoundFactor[]): number {
+        return new RuleOfThreeCalculator().composta(b, fatores);
     }
 }
