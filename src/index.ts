@@ -42,3 +42,4 @@ export * from './math/services/arithmetic-progression/arithmetic-progression.cal
 export * from './math/services/pearson-correlation/pearson-correlation.calculator';
 export * from './math/services/thermal-sensation/thermal-sensation.calculator';
 export * from './math/services/prime/prime.calculator';
+export * from './math/services/equation/equation.calculator';
