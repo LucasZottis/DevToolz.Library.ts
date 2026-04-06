@@ -40,3 +40,4 @@ export * from './math/services/multiply/multiply.calculator';
 export * from './math/services/divide/divide.calculator';
 export * from './math/services/arithmetic-progression/arithmetic-progression.calculator';
 export * from './math/services/pearson-correlation/pearson-correlation.calculator';
+export * from './math/services/thermal-sensation/thermal-sensation.calculator';
