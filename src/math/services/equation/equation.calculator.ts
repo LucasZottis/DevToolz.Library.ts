@@ -4,8 +4,15 @@ export interface SecondDegreeEquationResult {
     x2: number | null;
 }
 
-export class SecondDegreeEquationCalculator {
-    calculate(a: number, b: number, c: number): SecondDegreeEquationResult {
+export class EquationCalculator {
+    firstDegree(a: number, b: number): number {
+        if (a === 0) throw new Error("O coeficiente 'a' não pode ser zero em uma equação de 1º grau.");
+
+        const result = -b / a;
+        return result === 0 ? 0 : result;
+    }
+
+    secondDegree(a: number, b: number, c: number): SecondDegreeEquationResult {
         if (a === 0) throw new Error("O coeficiente 'a' não pode ser zero em uma equação de 2º grau.");
 
         const delta = b * b - 4 * a * c;

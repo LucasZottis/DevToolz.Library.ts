@@ -6,8 +6,7 @@ import { ArithmeticProgressionCalculator } from "./services/arithmetic-progressi
 import { PearsonCorrelationCalculator } from "./services/pearson-correlation/pearson-correlation.calculator";
 import { ThermalSensationCalculator } from "./services/thermal-sensation/thermal-sensation.calculator";
 import { PrimeCalculator } from "./services/prime/prime.calculator";
-import { FirstDegreeEquationCalculator } from "./services/first-degree-equation/first-degree-equation.calculator";
-import { SecondDegreeEquationCalculator } from "./services/second-degree-equation/second-degree-equation.calculator";
+import { EquationCalculator } from "./services/equation/equation.calculator";
 
 export class Math {
     static sum(a: number, b: number): number {
@@ -51,10 +50,10 @@ export class Math {
     }
 
     static firstDegreeEquation(a: number, b: number): number {
-        return new FirstDegreeEquationCalculator().calculate(a, b);
+        return new EquationCalculator().firstDegree(a, b);
     }
 
     static secondDegreeEquation(a: number, b: number, c: number) {
-        return new SecondDegreeEquationCalculator().calculate(a, b, c);
+        return new EquationCalculator().secondDegree(a, b, c);
     }
 }
