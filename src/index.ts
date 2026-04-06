@@ -32,3 +32,9 @@ export * from './converters/text-format/textFormatConverter.converter';
 
 export * from './text-letter-counter/models/text-letter-counter-result';
 export * from './text-letter-counter/text-letter-counter';
+
+export * from './math/math';
+export * from './math/services/sum/sum.calculator';
+export * from './math/services/subtract/subtract.calculator';
+export * from './math/services/multiply/multiply.calculator';
+export * from './math/services/divide/divide.calculator';
