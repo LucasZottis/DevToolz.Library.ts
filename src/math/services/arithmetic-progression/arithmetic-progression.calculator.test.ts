@@ -7,69 +7,47 @@ describe('ArithmeticProgressionCalculator', () => {
         calculator = new ArithmeticProgressionCalculator();
     });
 
-    describe('nthTerm', () => {
-        test('PA (2, 3): 1º termo = 2', () => {
-            expect(calculator.nthTerm(2, 3, 1)).toBe(2);
+    describe('calculate', () => {
+        test('PA (2, 3, 1): nthTerm=2, sum=2, sequence=[2]', () => {
+            const result = calculator.calculate(2, 3, 1);
+            expect(result.nthTerm).toBe(2);
+            expect(result.sum).toBe(2);
+            expect(result.sequence).toEqual([2]);
         });
 
-        test('PA (2, 3): 2º termo = 5', () => {
-            expect(calculator.nthTerm(2, 3, 2)).toBe(5);
+        test('PA (2, 3, 2): nthTerm=5, sum=7, sequence=[2, 5]', () => {
+            const result = calculator.calculate(2, 3, 2);
+            expect(result.nthTerm).toBe(5);
+            expect(result.sum).toBe(7);
+            expect(result.sequence).toEqual([2, 5]);
         });
 
-        test('PA (2, 3): 5º termo = 14', () => {
-            expect(calculator.nthTerm(2, 3, 5)).toBe(14);
+        test('PA (2, 3, 5): nthTerm=14, sum=40, sequence=[2, 5, 8, 11, 14]', () => {
+            const result = calculator.calculate(2, 3, 5);
+            expect(result.nthTerm).toBe(14);
+            expect(result.sum).toBe(40);
+            expect(result.sequence).toEqual([2, 5, 8, 11, 14]);
         });
 
-        test('PA (10, -2): 4º termo = 4', () => {
-            expect(calculator.nthTerm(10, -2, 4)).toBe(4);
+        test('PA (1, 1, 5): nthTerm=5, sum=15, sequence=[1, 2, 3, 4, 5]', () => {
+            const result = calculator.calculate(1, 1, 5);
+            expect(result.nthTerm).toBe(5);
+            expect(result.sum).toBe(15);
+            expect(result.sequence).toEqual([1, 2, 3, 4, 5]);
         });
 
-        test('PA (5, 0): 10º termo = 5 (PA constante)', () => {
-            expect(calculator.nthTerm(5, 0, 10)).toBe(5);
-        });
-    });
-
-    describe('sum', () => {
-        test('PA (1, 1): soma dos 5 primeiros termos = 15', () => {
-            expect(calculator.sum(1, 1, 5)).toBe(15);
+        test('PA (10, -2, 5): nthTerm=2, sum=30, sequence=[10, 8, 6, 4, 2]', () => {
+            const result = calculator.calculate(10, -2, 5);
+            expect(result.nthTerm).toBe(2);
+            expect(result.sum).toBe(30);
+            expect(result.sequence).toEqual([10, 8, 6, 4, 2]);
         });
 
-        test('PA (2, 3): soma dos 4 primeiros termos = 26', () => {
-            expect(calculator.sum(2, 3, 4)).toBe(26);
-        });
-
-        test('PA (10, -2): soma dos 5 primeiros termos = 30', () => {
-            expect(calculator.sum(10, -2, 5)).toBe(30);
-        });
-
-        test('PA (5, 0): soma dos 3 primeiros termos = 15 (PA constante)', () => {
-            expect(calculator.sum(5, 0, 3)).toBe(15);
-        });
-
-        test('PA (1, 2): soma dos 1 primeiro termo = 1', () => {
-            expect(calculator.sum(1, 2, 1)).toBe(1);
-        });
-    });
-
-    describe('sequence', () => {
-        test('PA (1, 1): primeiros 5 termos = [1, 2, 3, 4, 5]', () => {
-            expect(calculator.sequence(1, 1, 5)).toEqual([1, 2, 3, 4, 5]);
-        });
-
-        test('PA (2, 3): primeiros 4 termos = [2, 5, 8, 11]', () => {
-            expect(calculator.sequence(2, 3, 4)).toEqual([2, 5, 8, 11]);
-        });
-
-        test('PA (10, -2): primeiros 5 termos = [10, 8, 6, 4, 2]', () => {
-            expect(calculator.sequence(10, -2, 5)).toEqual([10, 8, 6, 4, 2]);
-        });
-
-        test('PA (5, 0): primeiros 3 termos = [5, 5, 5] (PA constante)', () => {
-            expect(calculator.sequence(5, 0, 3)).toEqual([5, 5, 5]);
-        });
-
-        test('PA (1, 2): 1 termo = [1]', () => {
-            expect(calculator.sequence(1, 2, 1)).toEqual([1]);
+        test('PA (5, 0, 3): PA constante nthTerm=5, sum=15, sequence=[5, 5, 5]', () => {
+            const result = calculator.calculate(5, 0, 3);
+            expect(result.nthTerm).toBe(5);
+            expect(result.sum).toBe(15);
+            expect(result.sequence).toEqual([5, 5, 5]);
         });
     });
 });

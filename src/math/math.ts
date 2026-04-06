@@ -22,11 +22,6 @@ export class Math {
     }
 
     static arithmeticProgression(firstTerm: number, commonDifference: number, n: number) {
-        const calculator = new ArithmeticProgressionCalculator();
-        return {
-            nthTerm: calculator.nthTerm(firstTerm, commonDifference, n),
-            sum: calculator.sum(firstTerm, commonDifference, n),
-            sequence: calculator.sequence(firstTerm, commonDifference, n),
-        };
+        return new ArithmeticProgressionCalculator().calculate(firstTerm, commonDifference, n);
     }
 }
