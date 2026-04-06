@@ -68,7 +68,7 @@ export class Math {
     }
 
     static ruleOfThreeDirect(a: number, b: number, c: number): number {
-        return new RuleOfThreeCalculator().simplaDireta(a, b, c);
+        return new RuleOfThreeCalculator().simplesDireta(a, b, c);
     }
 
     static ruleOfThreeInverse(a: number, b: number, c: number): number {

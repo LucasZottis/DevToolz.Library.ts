@@ -7,33 +7,33 @@ describe('RuleOfThreeCalculator', () => {
         calculator = new RuleOfThreeCalculator();
     });
 
-    describe('simplaDireta', () => {
+    describe('simplesDireta', () => {
         test('2 está para 4 assim como 3 está para 6', () => {
-            expect(calculator.simplaDireta(2, 4, 3)).toBe(6);
+            expect(calculator.simplesDireta(2, 4, 3)).toBe(6);
         });
 
         test('10 está para 50 assim como 3 está para 15', () => {
-            expect(calculator.simplaDireta(10, 50, 3)).toBe(15);
+            expect(calculator.simplesDireta(10, 50, 3)).toBe(15);
         });
 
         test('5 está para 20 assim como 1 está para 4', () => {
-            expect(calculator.simplaDireta(5, 20, 1)).toBe(4);
+            expect(calculator.simplesDireta(5, 20, 1)).toBe(4);
         });
 
         test('resultado fracionário', () => {
-            expect(calculator.simplaDireta(3, 1, 1)).toBeCloseTo(0.333, 2);
+            expect(calculator.simplesDireta(3, 1, 1)).toBeCloseTo(0.333, 2);
         });
 
         test('valores negativos', () => {
-            expect(calculator.simplaDireta(-2, 4, 3)).toBe(-6);
+            expect(calculator.simplesDireta(-2, 4, 3)).toBe(-6);
         });
 
         test('lança erro quando a é zero', () => {
-            expect(() => calculator.simplaDireta(0, 4, 3)).toThrow("O valor 'a' não pode ser zero.");
+            expect(() => calculator.simplesDireta(0, 4, 3)).toThrow("O valor 'a' não pode ser zero.");
         });
 
         test('lança erro para valores infinitos', () => {
-            expect(() => calculator.simplaDireta(Infinity, 4, 3)).toThrow("Os valores devem ser números finitos.");
+            expect(() => calculator.simplesDireta(Infinity, 4, 3)).toThrow("Os valores devem ser números finitos.");
         });
     });
 

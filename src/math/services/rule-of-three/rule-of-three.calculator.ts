@@ -12,7 +12,7 @@ export class RuleOfThreeCalculator {
      * a está para b assim como c está para x.
      * x = (b * c) / a
      */
-    simplaDireta(a: number, b: number, c: number): number {
+    simplesDireta(a: number, b: number, c: number): number {
         if (a === 0) throw new Error("O valor 'a' não pode ser zero.");
         if (!isFinite(a) || !isFinite(b) || !isFinite(c)) throw new Error("Os valores devem ser números finitos.");
         return (b * c) / a;
