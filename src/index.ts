@@ -44,3 +44,4 @@ export * from './math/services/thermal-sensation/thermal-sensation.calculator';
 export * from './math/services/prime/prime.calculator';
 export * from './math/services/equation/equation.calculator';
 export * from './math/services/fraction/fraction.calculator';
+export * from './math/services/rule-of-three/rule-of-three.calculator';
