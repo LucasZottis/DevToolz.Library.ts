@@ -9,6 +9,7 @@ import { PrimeCalculator } from "./services/prime/prime.calculator";
 import { EquationCalculator } from "./services/equation/equation.calculator";
 import { FractionCalculator, Fraction } from "./services/fraction/fraction.calculator";
 import { RuleOfThreeCalculator, CompoundFactor } from "./services/rule-of-three/rule-of-three.calculator";
+import { GeometricAreaCalculator } from "./services/geometric-area/geometric-area.calculator";
 
 export class Math {
     static sum(a: number, b: number): number {
@@ -77,5 +78,33 @@ export class Math {
 
     static ruleOfThreeCompound(b: number, fatores: CompoundFactor[]): number {
         return new RuleOfThreeCalculator().composta(b, fatores);
+    }
+
+    static squareArea(side: number): number {
+        return new GeometricAreaCalculator().square(side);
+    }
+
+    static rectangleArea(base: number, height: number): number {
+        return new GeometricAreaCalculator().rectangle(base, height);
+    }
+
+    static triangleArea(base: number, height: number): number {
+        return new GeometricAreaCalculator().triangle(base, height);
+    }
+
+    static circleArea(radius: number): number {
+        return new GeometricAreaCalculator().circle(radius);
+    }
+
+    static trapezoidArea(base1: number, base2: number, height: number): number {
+        return new GeometricAreaCalculator().trapezoid(base1, base2, height);
+    }
+
+    static rhombusArea(diagonal1: number, diagonal2: number): number {
+        return new GeometricAreaCalculator().rhombus(diagonal1, diagonal2);
+    }
+
+    static parallelogramArea(base: number, height: number): number {
+        return new GeometricAreaCalculator().parallelogram(base, height);
     }
 }
