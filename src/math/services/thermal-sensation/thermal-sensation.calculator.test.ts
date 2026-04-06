@@ -13,9 +13,9 @@ describe('ThermalSensationCalculator', () => {
             expect(result).toBeCloseTo(1.07, 1);
         });
 
-        test('retorna a temperatura real quando T > 10°C', () => {
+        test('retorna sensação térmica com vento (T > 10°C e V > 4.8 km/h)', () => {
             const result = calculator.calculate(25, 30);
-            expect(result).toBe(25);
+            expect(result).toBeCloseTo(26.15, 1);
         });
 
         test('retorna a temperatura real quando velocidade do vento ≤ 4.8 km/h', () => {
@@ -23,7 +23,7 @@ describe('ThermalSensationCalculator', () => {
             expect(result).toBe(5);
         });
 
-        test('retorna a temperatura real quando T = 10°C e V > 4.8 km/h', () => {
+        test('retorna sensação térmica com vento (T = 10°C e V > 4.8 km/h)', () => {
             const result = calculator.calculate(10, 10);
             expect(result).toBeCloseTo(8.62, 1);
         });

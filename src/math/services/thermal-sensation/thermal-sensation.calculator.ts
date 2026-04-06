@@ -4,7 +4,7 @@ export class ThermalSensationCalculator {
             throw new Error("A velocidade do vento não pode ser negativa.");
         }
 
-        if (temperature <= 10 && windSpeed > 4.8) {
+        if (windSpeed > 4.8) {
             return (
                 13.12 +
                 0.6215 * temperature -
