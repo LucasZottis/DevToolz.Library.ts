@@ -3,6 +3,7 @@ import { SubtractCalculator } from "./services/subtract/subtract.calculator";
 import { MultiplyCalculator } from "./services/multiply/multiply.calculator";
 import { DivideCalculator } from "./services/divide/divide.calculator";
 import { ArithmeticProgressionCalculator } from "./services/arithmetic-progression/arithmetic-progression.calculator";
+import { PearsonCorrelationCalculator } from "./services/pearson-correlation/pearson-correlation.calculator";
 
 export class Math {
     static sum(a: number, b: number): number {
@@ -23,5 +24,9 @@ export class Math {
 
     static arithmeticProgression(firstTerm: number, commonDifference: number, n: number) {
         return new ArithmeticProgressionCalculator().calculate(firstTerm, commonDifference, n);
+    }
+
+    static pearsonCorrelation(x: number[], y: number[]): number {
+        return new PearsonCorrelationCalculator().calculate(x, y);
     }
 }
