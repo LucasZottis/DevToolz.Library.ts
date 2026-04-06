@@ -5,6 +5,7 @@ import { DivideCalculator } from "./services/divide/divide.calculator";
 import { ArithmeticProgressionCalculator } from "./services/arithmetic-progression/arithmetic-progression.calculator";
 import { PearsonCorrelationCalculator } from "./services/pearson-correlation/pearson-correlation.calculator";
 import { ThermalSensationCalculator } from "./services/thermal-sensation/thermal-sensation.calculator";
+import { PrimeCalculator } from "./services/prime/prime.calculator";
 
 export class Math {
     static sum(a: number, b: number): number {
@@ -37,5 +38,13 @@ export class Math {
 
     static thermalSensation(temperature: number, windSpeed: number, humidity: number): number {
         return new ThermalSensationCalculator().thermalSensation(temperature, windSpeed, humidity);
+    }
+
+    static isPrime(n: number): boolean {
+        return new PrimeCalculator().isPrime(n);
+    }
+
+    static listPrimesInRange(min: number, max: number): number[] {
+        return new PrimeCalculator().listPrimesInRange(min, max);
     }
 }
