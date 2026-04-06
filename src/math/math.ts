@@ -7,6 +7,7 @@ import { PearsonCorrelationCalculator } from "./services/pearson-correlation/pea
 import { ThermalSensationCalculator } from "./services/thermal-sensation/thermal-sensation.calculator";
 import { PrimeCalculator } from "./services/prime/prime.calculator";
 import { EquationCalculator } from "./services/equation/equation.calculator";
+import { FractionCalculator, Fraction } from "./services/fraction/fraction.calculator";
 
 export class Math {
     static sum(a: number, b: number): number {
@@ -55,5 +56,13 @@ export class Math {
 
     static secondDegreeEquation(a: number, b: number, c: number) {
         return new EquationCalculator().secondDegree(a, b, c);
+    }
+
+    static decimalToFraction(decimal: number): Fraction {
+        return new FractionCalculator().decimalToFraction(decimal);
+    }
+
+    static fractionToDecimal(numerator: number, denominator: number): number {
+        return new FractionCalculator().fractionToDecimal(numerator, denominator);
     }
 }

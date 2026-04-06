@@ -43,3 +43,4 @@ export * from './math/services/pearson-correlation/pearson-correlation.calculato
 export * from './math/services/thermal-sensation/thermal-sensation.calculator';
 export * from './math/services/prime/prime.calculator';
 export * from './math/services/equation/equation.calculator';
+export * from './math/services/fraction/fraction.calculator';
