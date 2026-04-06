@@ -31,7 +31,11 @@ export class Math {
         return new PearsonCorrelationCalculator().calculate(x, y);
     }
 
+    static heatIndex(temperature: number, humidity: number): number {
+        return new ThermalSensationCalculator().heatIndex(temperature, humidity);
+    }
+
     static thermalSensation(temperature: number, windSpeed: number, humidity: number): number {
-        return new ThermalSensationCalculator().calculate(temperature, windSpeed, humidity);
+        return new ThermalSensationCalculator().thermalSensation(temperature, windSpeed, humidity);
     }
 }

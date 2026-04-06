@@ -8,7 +8,11 @@ export class ThermalSensationCalculator {
         );
     }
 
-    private heatIndex(temperature: number, humidity: number): number {
+    heatIndex(temperature: number, humidity: number): number {
+        if (humidity < 0 || humidity > 100) {
+            throw new Error("A umidade relativa deve estar entre 0 e 100.");
+        }
+
         const T = temperature * 9 / 5 + 32;
         const R = humidity;
 
@@ -26,7 +30,7 @@ export class ThermalSensationCalculator {
         return (HI_F - 32) * 5 / 9;
     }
 
-    calculate(temperature: number, windSpeed: number, humidity: number): number {
+    thermalSensation(temperature: number, windSpeed: number, humidity: number): number {
         if (windSpeed < 0) {
             throw new Error("A velocidade do vento não pode ser negativa.");
         }
