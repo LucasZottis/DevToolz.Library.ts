@@ -45,3 +45,4 @@ export * from './math/services/prime/prime.calculator';
 export * from './math/services/equation/equation.calculator';
 export * from './math/services/fraction/fraction.calculator';
 export * from './math/services/rule-of-three/rule-of-three.calculator';
+export * from './math/services/geometric-area/geometric-area.calculator';
