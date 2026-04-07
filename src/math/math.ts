@@ -10,6 +10,7 @@ import { EquationCalculator } from "./services/equation/equation.calculator";
 import { FractionCalculator, Fraction } from "./services/fraction/fraction.calculator";
 import { RuleOfThreeCalculator, CompoundFactor } from "./services/rule-of-three/rule-of-three.calculator";
 import { GeometricAreaCalculator } from "./services/geometric-area/geometric-area.calculator";
+import { GcdCalculator } from "./services/gcd/gcd.calculator";
 
 export class Math {
     static sum(a: number, b: number): number {
@@ -106,5 +107,9 @@ export class Math {
 
     static parallelogramArea(base: number, height: number): number {
         return new GeometricAreaCalculator().parallelogram(base, height);
+    }
+
+    static gcd(...values: number[]): number {
+        return new GcdCalculator().calculate(...values);
     }
 }
