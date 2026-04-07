@@ -109,7 +109,7 @@ export class Math {
         return new GeometricAreaCalculator().parallelogram(base, height);
     }
 
-    static gcd(a: number, b: number): number {
-        return new GcdCalculator().calculate(a, b);
+    static gcd(...values: number[]): number {
+        return new GcdCalculator().calculate(...values);
     }
 }

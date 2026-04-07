@@ -1,8 +1,5 @@
 export class GcdCalculator {
-    calculate(a: number, b: number): number {
-        if (!Number.isInteger(a) || !Number.isInteger(b)) throw new Error("Os valores devem ser números inteiros.");
-        if (a === 0 && b === 0) throw new Error("Os dois valores não podem ser zero simultaneamente.");
-
+    private gcdTwo(a: number, b: number): number {
         a = globalThis.Math.abs(a);
         b = globalThis.Math.abs(b);
 
@@ -13,5 +10,13 @@ export class GcdCalculator {
         }
 
         return a;
+    }
+
+    calculate(...values: number[]): number {
+        if (values.length < 2) throw new Error("São necessários pelo menos dois valores.");
+        if (values.some(v => !Number.isInteger(v))) throw new Error("Os valores devem ser números inteiros.");
+        if (values.every(v => v === 0)) throw new Error("Todos os valores não podem ser zero simultaneamente.");
+
+        return values.reduce((acc, v) => this.gcdTwo(acc, v));
     }
 }

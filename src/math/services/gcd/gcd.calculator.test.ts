@@ -44,16 +44,36 @@ describe('GcdCalculator', () => {
             expect(calculator.calculate(1, 100)).toBe(1);
         });
 
-        test('lança erro quando ambos os valores são zero', () => {
-            expect(() => calculator.calculate(0, 0)).toThrow("Os dois valores não podem ser zero simultaneamente.");
+        test('MDC de três valores: MDC(12, 8, 6) é 2', () => {
+            expect(calculator.calculate(12, 8, 6)).toBe(2);
         });
 
-        test('lança erro quando o primeiro valor não é inteiro', () => {
+        test('MDC de quatro valores: MDC(100, 75, 50, 25) é 25', () => {
+            expect(calculator.calculate(100, 75, 50, 25)).toBe(25);
+        });
+
+        test('MDC de cinco valores: MDC(60, 48, 36, 24, 12) é 12', () => {
+            expect(calculator.calculate(60, 48, 36, 24, 12)).toBe(12);
+        });
+
+        test('lança erro quando menos de dois valores são fornecidos', () => {
+            expect(() => calculator.calculate(5)).toThrow("São necessários pelo menos dois valores.");
+        });
+
+        test('lança erro quando todos os valores são zero', () => {
+            expect(() => calculator.calculate(0, 0)).toThrow("Todos os valores não podem ser zero simultaneamente.");
+        });
+
+        test('lança erro quando todos os valores são zero (múltiplos)', () => {
+            expect(() => calculator.calculate(0, 0, 0)).toThrow("Todos os valores não podem ser zero simultaneamente.");
+        });
+
+        test('lança erro quando algum valor não é inteiro', () => {
             expect(() => calculator.calculate(1.5, 3)).toThrow("Os valores devem ser números inteiros.");
         });
 
-        test('lança erro quando o segundo valor não é inteiro', () => {
-            expect(() => calculator.calculate(3, 1.5)).toThrow("Os valores devem ser números inteiros.");
+        test('lança erro quando algum valor não é inteiro (múltiplos)', () => {
+            expect(() => calculator.calculate(4, 2, 1.5)).toThrow("Os valores devem ser números inteiros.");
         });
     });
 });
