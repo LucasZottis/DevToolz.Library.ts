@@ -1,6 +1,6 @@
 {
   "name": "devtoolz-library",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Biblioteca de funcionalidades gerais usadas no dia a dia de um desenvolvedor",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
