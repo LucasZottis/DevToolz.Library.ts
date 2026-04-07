@@ -32,3 +32,20 @@ export * from './converters/text-format/textFormatConverter.converter';
 
 export * from './text-letter-counter/models/text-letter-counter-result';
 export * from './text-letter-counter/text-letter-counter';
+
+export * from './math/math';
+export * from './math/services/sum/sum.calculator';
+export * from './math/services/subtract/subtract.calculator';
+export * from './math/services/multiply/multiply.calculator';
+export * from './math/services/divide/divide.calculator';
+export * from './math/services/arithmetic-progression/arithmetic-progression.calculator';
+export * from './math/services/pearson-correlation/pearson-correlation.calculator';
+export * from './math/services/thermal-sensation/thermal-sensation.calculator';
+export * from './math/services/prime/prime.calculator';
+export * from './math/services/equation/equation.calculator';
+export * from './math/services/fraction/fraction.calculator';
+export * from './math/services/rule-of-three/rule-of-three.calculator';
+export * from './math/services/geometric-area/geometric-area.calculator';
+export * from './math/services/gcd/gcd.calculator';
+export * from './math/services/lcm/lcm.calculator';
+export * from './math/services/percentage/percentage.calculator';
