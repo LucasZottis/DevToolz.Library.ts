@@ -12,6 +12,7 @@ import { RuleOfThreeCalculator, CompoundFactor } from "./services/rule-of-three/
 import { GeometricAreaCalculator } from "./services/geometric-area/geometric-area.calculator";
 import { GcdCalculator } from "./services/gcd/gcd.calculator";
 import { LcmCalculator } from "./services/lcm/lcm.calculator";
+import { PercentageCalculator } from "./services/percentage/percentage.calculator";
 
 export class Math {
     static sum(a: number, b: number): number {
@@ -116,5 +117,13 @@ export class Math {
 
     static lcm(...values: number[]): number {
         return new LcmCalculator().calculate(...values);
+    }
+
+    static numberToPercentage(value: number, total: number): number {
+        return new PercentageCalculator().numberToPercentage(value, total);
+    }
+
+    static percentageToValue(percentage: number, total: number): number {
+        return new PercentageCalculator().percentageToValue(percentage, total);
     }
 }

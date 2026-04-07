@@ -48,3 +48,4 @@ export * from './math/services/rule-of-three/rule-of-three.calculator';
 export * from './math/services/geometric-area/geometric-area.calculator';
 export * from './math/services/gcd/gcd.calculator';
 export * from './math/services/lcm/lcm.calculator';
+export * from './math/services/percentage/percentage.calculator';
