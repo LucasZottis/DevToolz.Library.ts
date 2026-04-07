@@ -11,6 +11,7 @@ import { FractionCalculator, Fraction } from "./services/fraction/fraction.calcu
 import { RuleOfThreeCalculator, CompoundFactor } from "./services/rule-of-three/rule-of-three.calculator";
 import { GeometricAreaCalculator } from "./services/geometric-area/geometric-area.calculator";
 import { GcdCalculator } from "./services/gcd/gcd.calculator";
+import { LcmCalculator } from "./services/lcm/lcm.calculator";
 
 export class Math {
     static sum(a: number, b: number): number {
@@ -111,5 +112,9 @@ export class Math {
 
     static gcd(...values: number[]): number {
         return new GcdCalculator().calculate(...values);
+    }
+
+    static lcm(...values: number[]): number {
+        return new LcmCalculator().calculate(...values);
     }
 }
