@@ -4,14 +4,15 @@ Biblioteca TypeScript de utilitários para o dia a dia do desenvolvedor — vali
 
 ## CNPJ
 
-### Formato numérico (padrão atual)
+### Formato numérico
 
 ```typescript
 import { Cnpj, CnpjValidator, CnpjGenerator, CnpjFormatter } from 'devtoolz-library';
 
 // Validar
-const result = CnpjValidator.validate('11.222.333/0001-81');
-console.log(result.isValid); // true
+const result = new CnpjValidator().validate('11.222.333/0001-81');
+result.isValid;  // true
+result.message;  // 'Válido'
 
 // Gerar
 const gerado = new CnpjGenerator().generate();        // '11222333000181'
@@ -26,34 +27,27 @@ cnpj.secondVerifyDigit; // '1'
 cnpj.toString();        // '11222333000181'
 cnpj.toFormatted();     // '11.222.333/0001-81'
 
-const seguro = Cnpj.tryParse('invalido'); // null em vez de throw
+Cnpj.tryParse('invalido'); // null em vez de lançar exceção
 ```
 
 ### Formato alfanumérico (IN RFB nº 2.229/2024 — vigência julho/2026)
 
-A partir de julho de 2026 a Receita Federal passará a emitir CNPJs com letras maiúsculas (A-Z) nas 12 primeiras posições. Os dois dígitos verificadores continuam sempre numéricos. O algoritmo módulo-11 é o mesmo; a única mudança é que cada caractere é convertido pelo valor ASCII menos 48 (letras A-Z valem 17-42).
+A partir de julho de 2026 a Receita Federal passará a emitir CNPJs com letras maiúsculas (A-Z) nas 12 primeiras posições. Os dois dígitos verificadores continuam sempre numéricos.
 
 ```typescript
-import {
-    Cnpj,
-    CnpjValidator,
-    CnpjGenerator,
-    CnpjFormat,   // 'numeric' | 'alphanumeric'
-    CnpjOptions,  // { format?: CnpjFormat }
-} from 'devtoolz-library';
+import { Cnpj, CnpjValidator, CnpjGenerator, CnpjFormatter, CnpjOptions } from 'devtoolz-library';
 
 const opts: CnpjOptions = { format: 'alphanumeric' };
 
-// Validar
+// Validar — o formato é detectado automaticamente quando não informado
 const validator = new CnpjValidator();
-validator.validate('12.ABC.345/01DE-35');              // autodetecção: isValid = true
-validator.validate('12ABC34501DE35', opts);            // explícito: isValid = true
-validator.validate('11222333000181', opts);            // numérico com flag alfanum.: isValid = true
+validator.validate('12.ABC.345/01DE-35');   // isValid = true
+validator.validate('12ABC34501DE35', opts); // isValid = true
 
 // Gerar
 const generator = new CnpjGenerator();
-const raw = generator.generate(opts);                  // ex: 'A1B2C3D4E5F668'
-const mascarado = new CnpjFormatter().applyMask(raw);  // 'A1.B2C.3D4/E5F6-68'
+const raw = generator.generate(opts);                 // ex: 'A1B2C3D4E5F668'
+new CnpjFormatter().applyMask(raw);                   // 'A1.B2C.3D4/E5F6-68'
 
 // Value Object
 const cnpj = Cnpj.parse('12.ABC.345/01DE-35');
@@ -64,36 +58,16 @@ cnpj.secondVerifyDigit; // '5'
 cnpj.toString();        // '12ABC34501DE35'
 cnpj.toFormatted();     // '12.ABC.345/01DE-35'
 
-const gerado = Cnpj.generate({ format: 'alphanumeric' });
-Cnpj.validate('12ABC34501DE35', opts).isValid; // true
+Cnpj.generate({ format: 'alphanumeric' }); // instância de Cnpj alfanumérico
 ```
-
-#### Autodetecção de formato
-
-Quando `format` não é especificado, o validador/parser detecta automaticamente:
-- Se qualquer um dos 12 primeiros caracteres (após remover máscara) for uma letra → `'alphanumeric'`
-- Caso contrário → `'numeric'`
-
-Isso garante **zero quebra de API**: todo código existente que não passa `options` continua funcionando exatamente como antes.
 
 #### Modo numérico estrito
 
-Passe `{ format: 'numeric' }` explicitamente para rejeitar qualquer CNPJ com letras:
+Passe `{ format: 'numeric' }` para rejeitar qualquer CNPJ com letras:
 
 ```typescript
-validator.validate('12ABC34501DE35', { format: 'numeric' });
-// isValid = false, message = 'CNPJ com formato inválido.'
-```
-
-### Utilitários exportados (avançado)
-
-```typescript
-import { charToDigitValue, calcVerifyingDigit, isRepeatedChars } from 'devtoolz-library/cnpj.utils';
-
-charToDigitValue('A'); // 17  (ASCII 65 - 48)
-charToDigitValue('0'); // 0   (ASCII 48 - 48)
-calcVerifyingDigit(5, '12ABC34501DE'); // '3'
-isRepeatedChars('00000000000000');     // true
+new CnpjValidator().validate('12ABC34501DE35', { format: 'numeric' });
+// isValid = false
 ```
 
 ## CPF
