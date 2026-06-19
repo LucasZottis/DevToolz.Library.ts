@@ -11,7 +11,7 @@ describe("CnpjGenerator", () => {
     });
 
     // -------------------------------------------------------------------------
-    // generate — sem máscara
+    // generate — numérico sem máscara
     // -------------------------------------------------------------------------
 
     describe("generate sem formatação", () => {
@@ -41,7 +41,7 @@ describe("CnpjGenerator", () => {
     });
 
     // -------------------------------------------------------------------------
-    // generate — com máscara
+    // generate — numérico com máscara
     // -------------------------------------------------------------------------
 
     describe("generate com formatação", () => {
@@ -54,6 +54,49 @@ describe("CnpjGenerator", () => {
             const result = generator.generate(true);
             const validation = validator.validate(result);
             expect(validation.isValid).toBe(true);
+        });
+    });
+
+    // -------------------------------------------------------------------------
+    // generate — alfanumérico (IN RFB nº 2.229/2024)
+    // -------------------------------------------------------------------------
+
+    describe("generate alfanumérico", () => {
+        it("deve retornar string de 14 caracteres", () => {
+            const result = generator.generate({ format: "alphanumeric" });
+            expect(result).toHaveLength(14);
+        });
+
+        it("deve gerar apenas maiúsculas e dígitos nas primeiras 12 posições", () => {
+            const result = generator.generate({ format: "alphanumeric" });
+            expect(result.substring(0, 12)).toMatch(/^[A-Z0-9]{12}$/);
+        });
+
+        it("deve gerar DV numérico nas duas últimas posições", () => {
+            const result = generator.generate({ format: "alphanumeric" });
+            expect(result.substring(12)).toMatch(/^\d{2}$/);
+        });
+
+        it("deve gerar CNPJ alfanumérico matematicamente válido", () => {
+            for (let i = 0; i < 20; i++) {
+                const result = generator.generate({ format: "alphanumeric" });
+                const validation = validator.validate(result);
+                expect(validation.isValid).toBe(true);
+            }
+        });
+
+        it("não deve gerar CNPJ alfanumérico com todos os caracteres iguais", () => {
+            for (let i = 0; i < 20; i++) {
+                const result = generator.generate({ format: "alphanumeric" });
+                expect(result).not.toMatch(/^(.)\1{13}$/);
+            }
+        });
+
+        it("deve gerar CNPJs alfanuméricos diferentes entre chamadas", () => {
+            const results = new Set(
+                Array.from({ length: 20 }, () => generator.generate({ format: "alphanumeric" }))
+            );
+            expect(results.size).toBeGreaterThan(1);
         });
     });
 });
