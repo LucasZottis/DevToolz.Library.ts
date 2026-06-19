@@ -26,7 +26,7 @@ describe("CnpjValidator", () => {
     });
 
     describe("Dado um CNPJ com formato inválido", () => {
-        it("deve retornar inválido para letras", () => {
+        it("deve retornar inválido para letras nas posições de DV (posições 13-14)", () => {
             const result = validator.validate("ab.cde.fgh/ijkl-mn");
             expect(result.isValid).toBe(false);
             expect(result.message).toBe("CNPJ com formato inválido.");
@@ -46,6 +46,12 @@ describe("CnpjValidator", () => {
 
         it("deve retornar inválido para máscara incorreta", () => {
             const result = validator.validate("11-222-333/0001.81");
+            expect(result.isValid).toBe(false);
+            expect(result.message).toBe("CNPJ com formato inválido.");
+        });
+
+        it("deve retornar inválido para CNPJ alfanumérico com letras nas posições de DV", () => {
+            const result = validator.validate("12ABC34501DEAB");
             expect(result.isValid).toBe(false);
             expect(result.message).toBe("CNPJ com formato inválido.");
         });
@@ -86,13 +92,19 @@ describe("CnpjValidator", () => {
             expect(result.isValid).toBe(false);
             expect(result.message).toBe("CNPJ é inválido.");
         });
+
+        it("deve retornar inválido para CNPJ alfanumérico com DV errado", () => {
+            const result = validator.validate("12ABC34501DE36");
+            expect(result.isValid).toBe(false);
+            expect(result.message).toBe("CNPJ é inválido.");
+        });
     });
 
     // -------------------------------------------------------------------------
-    // CNPJs válidos
+    // CNPJs válidos — numérico
     // -------------------------------------------------------------------------
 
-    describe("Dado um CNPJ válido", () => {
+    describe("Dado um CNPJ numérico válido", () => {
         it("deve aceitar CNPJ sem máscara", () => {
             const result = validator.validate("11222333000181");
             expect(result.isValid).toBe(true);
@@ -105,7 +117,7 @@ describe("CnpjValidator", () => {
             expect(result.message).toBe("Válido");
         });
 
-        it("deve aceitar múltiplos CNPJs válidos conhecidos", () => {
+        it("deve aceitar múltiplos CNPJs numéricos válidos conhecidos", () => {
             const validos = [
                 "11222333000181",
                 "11.222.333/0001-81",
@@ -115,6 +127,88 @@ describe("CnpjValidator", () => {
                 const result = validator.validate(cnpj);
                 expect(result.isValid).toBe(true);
             });
+        });
+    });
+
+    // -------------------------------------------------------------------------
+    // CNPJs válidos — alfanumérico (IN RFB nº 2.229/2024)
+    // -------------------------------------------------------------------------
+
+    describe("Dado um CNPJ alfanumérico válido", () => {
+        it.each([
+            ["12ABC34501DE35", "sem máscara"],
+            ["12.ABC.345/01DE-35", "com máscara"],
+            ["AB12C34D000184", "AB12C34D0001-84 sem máscara"],
+            ["AB.12C.34D/0001-84", "AB12C34D0001-84 com máscara"],
+            ["A1B2C3D4E5F668", "A1B2C3D4E5F6-68 sem máscara"],
+            ["A1.B2C.3D4/E5F6-68", "A1B2C3D4E5F6-68 com máscara"],
+        ])("deve aceitar %s (%s)", (cnpj) => {
+            const result = validator.validate(cnpj);
+            expect(result.isValid).toBe(true);
+            expect(result.message).toBe("Válido");
+        });
+    });
+
+    // -------------------------------------------------------------------------
+    // Autodetecção de formato
+    // -------------------------------------------------------------------------
+
+    describe("Autodetecção de formato", () => {
+        it("detecta numérico automaticamente quando não há flag", () => {
+            const result = validator.validate("11222333000181");
+            expect(result.isValid).toBe(true);
+        });
+
+        it("detecta alfanumérico automaticamente quando não há flag e há letras", () => {
+            const result = validator.validate("12.ABC.345/01DE-35");
+            expect(result.isValid).toBe(true);
+        });
+    });
+
+    // -------------------------------------------------------------------------
+    // Flag explícita — format: 'alphanumeric'
+    // -------------------------------------------------------------------------
+
+    describe("Com flag explícita format: 'alphanumeric'", () => {
+        it("aceita CNPJ alfanumérico válido", () => {
+            const result = validator.validate("12ABC34501DE35", { format: "alphanumeric" });
+            expect(result.isValid).toBe(true);
+        });
+
+        it("aceita CNPJ puramente numérico passado como alfanumérico", () => {
+            const result = validator.validate("11222333000181", { format: "alphanumeric" });
+            expect(result.isValid).toBe(true);
+        });
+
+        it("rejeita string vazia", () => {
+            const result = validator.validate("", { format: "alphanumeric" });
+            expect(result.isValid).toBe(false);
+            expect(result.message).toBe("CNPJ está vazio.");
+        });
+
+        it("rejeita CNPJ com todos os caracteres iguais no modo alfanumérico", () => {
+            // Letras nas posições de DV são bloqueadas pelo formato, portanto o caso
+            // de repetição que chega ao check de isRepeatedChars usa dígitos.
+            const result = validator.validate("00000000000000", { format: "alphanumeric" });
+            expect(result.isValid).toBe(false);
+            expect(result.message).toBe("CNPJ é inválido.");
+        });
+    });
+
+    // -------------------------------------------------------------------------
+    // Flag explícita — format: 'numeric'
+    // -------------------------------------------------------------------------
+
+    describe("Com flag explícita format: 'numeric'", () => {
+        it("rejeita CNPJ com letras quando modo numérico é forçado", () => {
+            const result = validator.validate("12ABC34501DE35", { format: "numeric" });
+            expect(result.isValid).toBe(false);
+            expect(result.message).toBe("CNPJ com formato inválido.");
+        });
+
+        it("aceita CNPJ numérico válido com flag numérica explícita", () => {
+            const result = validator.validate("11222333000181", { format: "numeric" });
+            expect(result.isValid).toBe(true);
         });
     });
 });
