@@ -2,11 +2,16 @@ import { CnpjValidator } from "./cnpj.validator";
 import { CnpjGenerator } from "./cnpj.generator";
 import { IValidationResult } from "../models/validation-result.model";
 import { CnpjFormatter } from "./cnpj.formatter";
+import { CnpjOptions } from "./cnpj.types";
 
 export class Cnpj {
-    readonly rootDigits: string;       // primeiros 8 dígitos (CNPJ raiz)
-    readonly orderDigits: string;      // dígitos 9–12 (filial/ordem)
+    /** First 8 characters of the CNPJ root (may contain letters in alphanumeric format). */
+    readonly rootDigits: string;
+    /** Characters 9-12 representing the establishment order (may contain letters in alphanumeric format). */
+    readonly orderDigits: string;
+    /** First verifying digit — always numeric. */
     readonly firstVerifyDigit: string;
+    /** Second verifying digit — always numeric. */
     readonly secondVerifyDigit: string;
 
     private constructor(
@@ -31,36 +36,37 @@ export class Cnpj {
         return formatter.applyMask(this.toString());
     }
 
-    static validate(value: string): IValidationResult {
+    static validate(value: string, options?: CnpjOptions): IValidationResult {
         const validator = new CnpjValidator();
-        return validator.validate(value ?? "");
+        return validator.validate(value ?? "", options);
     }
 
-    static generate(formatted?: boolean): Cnpj {
+    static generate(options?: CnpjOptions): Cnpj {
         const generator = new CnpjGenerator();
-        const generatedValue = generator.generate(formatted);
-        return this.parse(generatedValue);
+        const generatedValue = generator.generate(options);
+        return this.parse(generatedValue, options);
     }
 
-    static parse(value: string): Cnpj {
-        const result = this.validate(value);
+    static parse(value: string, options?: CnpjOptions): Cnpj {
+        const result = this.validate(value, options);
 
         if (!result.isValid)
             throw new Error(result.message);
 
-        const digits = value.replace(/[^\d]/g, "");
+        const formatter = new CnpjFormatter();
+        const cnpj = formatter.removeMask(value);
 
         return new Cnpj(
-            digits.substring(0, 8),
-            digits.substring(8, 12),
-            digits[12],
-            digits[13],
+            cnpj.substring(0, 8),
+            cnpj.substring(8, 12),
+            cnpj[12],
+            cnpj[13],
         );
     }
 
-    static tryParse(value: string): Cnpj | null {
+    static tryParse(value: string, options?: CnpjOptions): Cnpj | null {
         try {
-            return Cnpj.parse(value);
+            return Cnpj.parse(value, options);
         } catch {
             return null;
         }

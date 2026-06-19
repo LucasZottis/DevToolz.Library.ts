@@ -14,6 +14,7 @@ export * from './documents/cpf/cpf.validator';
 export * from './documents/cpf/cpf.generator';
 export * from './documents/cpf/cpf.formatter';
 
+export * from './documents/cnpj/cnpj.types';
 export * from './documents/cnpj/cnpj';
 export * from './documents/cnpj/cnpj.validator';
 export * from './documents/cnpj/cnpj.generator';
