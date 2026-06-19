@@ -12,6 +12,10 @@
     "test:file": "jest --testPathPattern",
     "debug-test": "node --inspect-brk node_modules/.bin/jest --runInBand"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LucasZottis/DevToolz.Library.ts"
+  },
   "author": "Lucas Zottis",
   "license": "ISC",
   "devDependencies": {
