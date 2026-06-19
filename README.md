@@ -85,6 +85,17 @@ validator.validate('12ABC34501DE35', { format: 'numeric' });
 // isValid = false, message = 'CNPJ com formato inválido.'
 ```
 
+### Utilitários exportados (avançado)
+
+```typescript
+import { charToDigitValue, calcVerifyingDigit, isRepeatedChars } from 'devtoolz-library/cnpj.utils';
+
+charToDigitValue('A'); // 17  (ASCII 65 - 48)
+charToDigitValue('0'); // 0   (ASCII 48 - 48)
+calcVerifyingDigit(5, '12ABC34501DE'); // '3'
+isRepeatedChars('00000000000000');     // true
+```
+
 ## CPF
 
 ```typescript
